@@ -1,0 +1,23 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.navbar-brand {
+	color: white!important;
+}
+
+#login {
+	padding-top:5%;
+}
+
+#signup-link {
+	text-align:right;
+}
+
+#login button {
+	float: right;
+}
+
+.error-message {
+	color: #e44c65;
+}
