@@ -28,7 +28,14 @@
   								</form>
 								
 							</li>
-							<li><a href="/login" class="button primary">Sign In/Register</a></li>
+							<li>
+								<%if(typeof user != "undefined"){%>
+									<span>Welcome, <%= firstName %></span>
+								<%}%>
+								<%if(typeof user == "undefined"){%>
+									<a href="/login" class="button primary">Sign In/Register</a>
+								<%}%>
+							</li>
 							<li><a href="/cart">Cart</a></li>
 						</ul>
 					</nav>
