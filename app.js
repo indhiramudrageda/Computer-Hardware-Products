@@ -8,6 +8,7 @@ var methodOveride = require('method-override');
 
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
+var signupRouter = require('./routes/signup');
 //var productsRouter = require('./routes/products');
 
 
@@ -29,6 +30,7 @@ app.use(methodOveride('_method'));
 
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
+app.use('/signup', signupRouter);
 //app.use('/api/products', productsRouter);
 
 // catch 404 and forward to error handler

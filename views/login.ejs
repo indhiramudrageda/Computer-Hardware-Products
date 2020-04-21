@@ -1,5 +1,5 @@
 <%- include ('partials/header') %>
-<div class="container" style="height:100%">
+<div class="container">
 <form method="post" action="login" onsubmit="return validateLogin()"> 
 	<div id="login" class="row">
 		<div class="col-2 col-12-medium imp-medium">
@@ -10,7 +10,7 @@
 				<h4>RETURNING USER</h4>
 			</div>
 			<div id="signup-link" class="col-6">
-				<span>New to Newegg? </span><a href="/register">Sign Up!</a>
+				<span>New to Newegg? </span><a href="/signup">Sign Up!</a>
 			</div>
 			</div>
 			<div class="row">
@@ -20,12 +20,12 @@
 				<%}%>
 				</div>
 			</div>
-			<label for="UserName">Email</label>
-			<input type="text" title="Email Address" id="UserName" name="UserName" data-type="email" required>
-			<span class="UserName-error-message error-message" for="UserName" style="display: none;"></span>
+			<label for="Email">Email</label>
+			<input type="text" title="Email Address" id="Email" name="Email" data-type="email" required>
+			<span class="Email-error-message error-message" for="Email" style="display: none;"></span>
 			</br>
 			<label for="Password">Password</label>
-			<input type="text" ttitle="Email Address" id="Password" name="Password" data-type="password" required>
+			<input type="text" ttitle="Password" id="Password" name="Password" data-type="password" required>
 			<span class="pwd-error-message error-message" for="Password" style="display: none;"></span>
 
 			</br></br>

@@ -1,0 +1,53 @@
+<%- include ('partials/header') %>
+<div class="container">
+<form method="post" action="signup" onsubmit="return validateSignup()"> 
+	<div id="signup" class="row">
+		<div class="col-2 col-12-medium imp-medium">
+		</div>
+		<div class="col-8 col-12-medium imp-medium aln-center aln-middle">
+			<div class="row">
+			<div class="col-6">
+				<h4>NEW USER</h4>
+			</div>
+			<div id="login-link" class="col-6">
+				<span>Have an account? </span><a href="/login">Sign In!</a>
+			</div>
+			</div>
+			<div class="row">
+				<div class="col-6 error-message">
+				<%if(typeof error != "undefined"){%>
+				<%= error %>
+				<%}%>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<label for="FirstName">First Name</label>
+					<input type="text" title="First Name" id="FirstName" name="FirstName" data-type="email" required>
+					<span class="FirstName-error-message error-message" for="FirstName" style="display: none;"></span>
+				</div>
+				<div class="col-6">
+					<label for="LastName">Last Name</label>
+					<input type="text" title="Last Name" id="LastName" name="LastName" data-type="email" required>
+					<span class="LastName-error-message error-message" for="LastName" style="display: none;"></span>
+				</div>
+			</div>
+			</br>
+			<label for="Email">Email</label>
+			<input type="text" title="Email Address" id="Email" name="Email" data-type="email" required>
+			<span class="Email-error-message error-message" for="Email" style="display: none;"></span>
+			</br>
+			<label for="Password">Password</label>
+			<input type="text" ttitle="Password" id="Password" name="Password" data-type="password" required>
+			<span class="pwd-error-message error-message" for="Password" style="display: none;"></span>
+
+			</br></br>
+			<button type="submit" class="button primary" style="">SIGN UP</button>
+			</br>
+		</div>
+		<div class="col-2 col-12-medium imp-medium"></div>
+	</div>
+</form>
+</div>
+
+<%- include ('partials/footer') %>

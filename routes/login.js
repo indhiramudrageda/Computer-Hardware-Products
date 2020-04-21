@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 var morgan = require('morgan');
 var router = express.Router();
 var monk = require('monk');
+var bcrypt = require('bcrypt');
 
 const app = express();
 app.set('port', 9000);
@@ -28,15 +29,22 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req,res) {
 	var collection = db.get('users');
-	collection.findOne({ username: req.body.UserName }, function(err, user){
+	collection.findOne({ email: req.body.Email }, function(err, user){
 		if (!user) {
-				res.render('login', { error: 'User name/password incorrect!' });
-            } else if (!user.validPassword(password)) {
-            	res.render('index', { error: 'User name/password incorrect!' });
-            } else {
-                req.session.UserName = req.body.UserName;
+			res.render('login', { error: 'Email ID is incorrect!' });
+        } 
+        bcrypt.compare(req.body.Password, user.password, function(err, result) {
+            if (err){
+                res.render('login', { error: 'Password is incorrect!' });
+            }
+            if (result) {
+                req.session.email = req.body.Email;
+                req.session.firstName = user.firstName;
                 res.redirect('/');
-        }
+            } else {
+                res.render('login', { error: 'Password is incorrect!' });
+            }
+        });
 	});  
 });
 
