@@ -31,6 +31,10 @@
 							<li>
 								<%if(typeof user != "undefined"){%>
 									<span>Welcome, <%= firstName %></span>
+									<ul>
+									<li><a href="/orderHistory">Order History</a></li>
+									<li><a href="/logout">Logout</a></li>
+									</ul>
 								<%}%>
 								<%if(typeof user == "undefined"){%>
 									<a href="/login" class="button primary">Sign In/Register</a>
