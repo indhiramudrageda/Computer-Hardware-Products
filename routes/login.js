@@ -31,20 +31,21 @@ router.post('/', function(req,res) {
 	var collection = db.get('users');
 	collection.findOne({ email: req.body.Email }, function(err, user){
 		if (!user) {
-			res.render('login', { error: 'Email ID is incorrect!' });
-        } 
-        bcrypt.compare(req.body.Password, user.password, function(err, result) {
-            if (err){
-                res.render('login', { error: 'Password is incorrect!' });
-            }
-            if (result) {
-                req.session.email = req.body.Email;
-                req.session.firstName = user.firstName;
-                res.redirect('/');
-            } else {
-                res.render('login', { error: 'Password is incorrect!' });
-            }
-        });
+			res.render('login', { error: "Email ID doesn't exist!" });
+        } else {
+            bcrypt.compare(req.body.Password, user.password, function(err, result) {
+                if (err){
+                    res.render('login', { error: 'Password is incorrect!' });
+                }
+                if (result) {
+                    req.session.email = req.body.Email;
+                    req.session.firstName = user.firstName;
+                    res.redirect('/');
+                } else {
+                    res.render('login', { error: 'Password is incorrect!' });
+                }
+            });
+        }
 	});  
 });
 
