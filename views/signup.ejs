@@ -38,11 +38,19 @@
 			<span class="Email-error-message error-message" for="Email" style="display: none;"></span>
 			</br>
 			<label for="Password">Password</label>
-			<input type="password" title="Password" id="Password" name="Password" data-type="password" required>
+			<input type="password"id="Password" name="Password" data-type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" onfocus="$('#pswd_info').show();" onblur= "$('#pswd_info').hide();" onkeyup="validatePassword();" required>
 			<span class="pwd-error-message error-message" for="Password" style="display: none;"></span>
-
-			</br></br>
+			</br>
 			<button type="submit" class="button primary" style="">SIGN UP</button>
+			<div id="pswd_info">
+    			<h4>Password must meet the following requirements:</h4>
+    			<ul>
+        			<li id="lowercase" class="invalid">At least <span class="strong">one lowercase letter</span></li>
+        			<li id="uppercase" class="invalid">At least <span class="strong">one uppercase letter</span></li>
+        			<li id="number" class="invalid">At least <span class="strong">one number</span></li>
+        			<li id="length" class="invalid">Be at least <span class="strong">8 characters</span></li>
+    			</ul>
+			</div>
 			</br>
 		</div>
 		<div class="col-2 col-12-medium imp-medium"></div>
