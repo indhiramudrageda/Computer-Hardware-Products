@@ -1,0 +1,177 @@
+<%- include ('partials/header') %>
+<div id="manage-products" class="container">
+</br></br>
+<div class="row">
+<div class="col-1">
+</div>
+<div class="col-10">
+<%if((typeof user == "undefined") || user.role != 'admin'){%>
+	<h1 class="strong" style="color: red; text-align:center;font-size:100px">Access Restricted!!</h1>
+<%}%>
+<%if((typeof user != "undefined") && user.role == 'admin'){%>
+	<div class="row">
+	<h1 class="strong" style="padding-left:0;padding-top:5px;padding-right:15px;font-size:large;">Products</h1>
+	<button class="button primary" onclick="showCreateDialog();">Add New</button>
+	</div>
+</div>
+</div>
+<div class="col-1">
+</div>
+
+</br></br>
+
+<div class="row">
+	<div class="col-1">
+	</div>
+	<div class="col-10 productsData">
+		<div class="row">
+		<% products.forEach(function(product){ %>
+			<div class="col-4 product">
+				<div class="product-details">
+					<img src="images/products/<%= product.image %>" style="width:200px; height:200px;" class="img-thumbnail"/>
+					<div class="product-caption"><%= product.name %></div>
+					<div class="product-actions">
+						<button class="button primary btn-edit" onclick="showEditDialog('<%=JSON.stringify(product)%>');">Edit</button>
+						<button class="button primary btn-delete" onclick="showCreateDialog();">Delete</button>
+					</div>
+				</div>
+			</div>
+		<% }); %>
+		</div>
+	</div>
+	<div class="col-1">
+	</div>
+</div>
+</div>
+
+</br></br>
+
+<div id="myCreateModal" class="modal">
+        <span class="create-close">&times;</span>
+        <div id="create-modal-content"></div>
+</div>
+<div id="create-product">
+<form id="create-product-form" action="/products" method="POST" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-1">
+		</div>
+		<div class="col-10">
+
+			<div class="row">
+				<div class="col-6 error-message">
+				
+				</div>
+			</div>
+
+			<label for="PName">Product Name</label>
+			<input type="text" title="Product Name" id="PName" name="PName" required/>
+			</br>
+			<div class="row">
+				<div class="col-6">
+					<label for="Category">Category</label>
+					<select id="Category" name="Category" required>
+					<% categories.forEach(function(category){ %>
+					<option value="<%= category.category %>"><%= category.category %></option>
+					<% }); %>
+  					</select>
+				</div>
+				<div class="col-6">
+					<label for="Status">Status</label>
+					<select id="Status" title="Status" name="Status" required>
+						<option value="Active">Active</option>
+						<option value="Inactive">Inactive</option>
+  					</select>
+				</div>
+			</div>
+			</br>
+			<div class="row">
+				<div class="col-6">
+					<label for="Stock">Stock</label>
+					<input type="text" title="Stock" id="Stock" name="Stock" required/>
+				</div>
+				<div class="col-6">
+					<label for="Price">Price</label>
+					<input type="text" title="Price" id="Price" name="Price" required/>
+				</div>
+			</div>
+			</br>
+			<label for="PDesc">Description</label>
+			<textarea title="Description" id="PDesc" name="PDesc"></textarea>
+			</br>
+			<input type="file" name="sampleFile" title="sampleFile" id="sampleFile" required/>
+			</br>
+			<button type="submit" id="btnSubmit" class="button primary" onclick="createProduct(event);">CREATE</button>
+		</div>
+		<div class="col-1">
+		</div>
+	</div>
+</form>
+</div>
+<div id="myEditModal" class="modal">
+    <span class="edit-close">&times;</span>
+    <div id="edit-modal-content"></div>
+</div>
+
+<div id="edit-product">
+
+	<div class="row">
+		<div class="col-1">
+		</div>
+		<div class="col-10">
+
+			<div class="row">
+				<div class="col-6 error-message">
+				
+				</div>
+			</div>
+			<input type="hidden" id="EditPID"/>
+
+			<label for="EditPName">Product Name</label>
+			<input type="text" title="Product Name" id="EditPName" name="EditPName" required/>
+			</br>
+			<div class="row">
+				<div class="col-6">
+					<label for="EditCategory">Category</label>
+					<select id="EditCategory" name="EditCategory" required>
+					<% categories.forEach(function(category){ %>
+					<option value="<%= category.category %>"><%= category.category %></option>
+					<% }); %>
+  					</select>
+				</div>
+				<div class="col-6">
+					<label for="EditStatus">Status</label>
+					<select id="EditStatus" title="Status" name="EditStatus" required>
+						<option value="Active">Active</option>
+						<option value="Inactive">Inactive</option>
+  					</select>
+				</div>
+			</div>
+			</br>
+			<div class="row">
+				<div class="col-6">
+					<label for="EditStock">Stock</label>
+					<input type="text" title="Stock" id="EditStock" name="EditStock" required/>
+				</div>
+				<div class="col-6">
+					<label for="EditPrice">Price</label>
+					<input type="text" title="Price" id="EditPrice" name="EditPrice" required/>
+				</div>
+			</div>
+			</br>
+			<label for="EditPDesc">Description</label>
+			<textarea title="Description" id="EditPDesc" name="EditPDesc"></textarea>
+			</br>
+			<input type="file" name="EditsampleFile" title="sampleFile" id="EditsampleFile" required/>
+			</br>
+			<button type="submit" class="button primary" onclick="updateProduct();">UPDATE</button>
+		</div>
+		<div class="col-1">
+		</div>
+	</div>
+
+</div>
+<%}%>
+</div>
+</div>
+</div>
+<%- include ('partials/footer') %>
