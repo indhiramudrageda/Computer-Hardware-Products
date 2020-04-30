@@ -5,10 +5,10 @@
 <div class="col-1">
 </div>
 <div class="col-10">
-<%if(user && user.role != 'admin'){%>
+<%if((typeof user == "undefined") || user.role != 'admin'){%>
 	<h1 class="strong" style="color: red; text-align:center;font-size:100px">Access Restricted!!</h1>
 <%}%>
-<%if(user && user.role == 'admin'){%>
+<%if((typeof user != "undefined") && user.role == 'admin'){%>
 	<div class="row">
 	<h1 class="strong" style="padding-left:0;padding-top:5px;padding-right:15px;font-size:large;">Products</h1>
 	<button class="button primary" onclick="showCreateDialog();">Add New</button>
@@ -171,5 +171,7 @@
 
 </div>
 <%}%>
+</div>
+</div>
 </div>
 <%- include ('partials/footer') %>
