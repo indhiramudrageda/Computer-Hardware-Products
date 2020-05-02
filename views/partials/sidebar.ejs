@@ -2,9 +2,18 @@
 <section id="sidebar">
   <nav class="navbar-side">
     <ul>
-      <li><button>Computer Systems</button></li>
-      <li><button>Components</button></li>
-      <li><button>Electronics</button></li>
+      <% categories.forEach(function(category){ %>
+      <li>
+        <form action="/" method="POST">
+          <input
+            name="category"
+            type="submit"
+            class="btn sidebarbutton"
+            value="<%= category.category %>"
+          />
+        </form>
+      </li>
+      <% }); %>
     </ul>
   </nav>
 </section>
