@@ -158,7 +158,7 @@ function updateProduct() {
 	var updatedProduct = {
 		name: $('#EditPName').val(), 
         category: $('#EditCategory').val(), 
-        description: $('#EditPDesc').text(),
+        description: $('#EditPDesc').val(),
         status: $('#EditStatus').val(),
         stock: $('#EditStock').val(),
         price: $('#EditPrice').val(),
