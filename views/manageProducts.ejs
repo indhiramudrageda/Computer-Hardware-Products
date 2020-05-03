@@ -28,11 +28,19 @@
 		<% products.forEach(function(product){ %>
 			<div class="col-4 product">
 				<div class="product-details">
+					<div class="product-image">
 					<img src="images/products/<%= product.image %>" style="width:200px; height:200px;" class="img-thumbnail"/>
+					<div class="upload-image-btn">
+						<button class="button primary btn-edit" onclick="showUploadDialog('<%=JSON.stringify(product)%>');">Change Image</button>
+					</div>
+					</div>
+					
+					
+
 					<div class="product-caption"><%= product.name %></div>
 					<div class="product-actions">
 						<button class="button primary btn-edit" onclick="showEditDialog('<%=JSON.stringify(product)%>');">Edit</button>
-						<button class="button primary btn-delete" onclick="showCreateDialog();">Delete</button>
+						<button class="button primary btn-delete" onclick="deleteProduct('<%=JSON.stringify(product)%>');">Delete</button>
 					</div>
 				</div>
 			</div>
@@ -107,6 +115,34 @@
 	</div>
 </form>
 </div>
+
+<div id="myUploadModal" class="upload-modal">
+        <span class="upload-close">&times;</span>
+        <div id="upload-modal-content"></div>
+</div>
+<div id="upload-product-img">
+<form id="upload-product-form" action="/products?_method=PUT" method="POST" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col-1">
+		</div>
+		<div class="col-10">
+
+			<div class="row">
+				<div class="col-6 error-message">
+				
+				</div>
+			</div>
+
+			<input type="file" name="EditsampleFile" title="sampleFile" id="EditsampleFile" required/>
+			</br></br></br>
+			<button type="submit" id="btnUploadSubmit" class="button primary" onclick="updateImage(event);">UPDATE</button>
+		</div>
+		<div class="col-1">
+		</div>
+	</div>
+</form>
+</div>
+
 <div id="myEditModal" class="modal">
     <span class="edit-close">&times;</span>
     <div id="edit-modal-content"></div>
@@ -160,8 +196,6 @@
 			</br>
 			<label for="EditPDesc">Description</label>
 			<textarea title="Description" id="EditPDesc" name="EditPDesc"></textarea>
-			</br>
-			<input type="file" name="EditsampleFile" title="sampleFile" id="EditsampleFile" required/>
 			</br>
 			<button type="submit" class="button primary" onclick="updateProduct();">UPDATE</button>
 		</div>
