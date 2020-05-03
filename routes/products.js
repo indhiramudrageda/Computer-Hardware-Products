@@ -9,7 +9,16 @@ const path = require('path');
 const app = express();
 app.set('port', 9003);
 app.use(morgan('dev'));
-var db = monk('localhost:27017/CHP');
+var db = monk('localhost:27017/newton');
+
+function isEmptyObject(obj) {
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      return false;
+    }
+  }
+  return true;
+}
 
 // applying expressFileUpload middleware
 app.use(expressFileUpload({
@@ -17,10 +26,22 @@ app.use(expressFileUpload({
 }));
 
 router.put('/:id', function(req, res) {
-    console.log(req.body);
     var collection = db.get('products');  
     var myquery = { _id: req.params.id };
-    var newvalues = { $set: {   name: req.body.name, 
+    var newvalues = {};
+    if(isEmptyObject(req.body)) {
+        let sampleFile = req.files.EditsampleFile;
+        var fname = sampleFile.name;
+        fname = req.params.id.toString()+fname.substring(fname.lastIndexOf("."));
+        sampleFile.mv(path.join('public/images/', 'products', fname ), (err) => {
+            if (err) throw err;
+        });
+
+        newvalues = { $set: {   image: fname,
+                                lastModifiedDate: new Date(Date.now()).toISOString(),
+                                lastModifiedBy:req.session.user.email } };
+    } else {
+        newvalues = { $set: {   name: req.body.name, 
                                 category: req.body.category, 
                                 description: req.body.description,
                                 status: req.body.status,
@@ -28,6 +49,8 @@ router.put('/:id', function(req, res) {
                                 price: req.body.price,
                                 lastModifiedDate: new Date(Date.now()).toISOString(),
                                 lastModifiedBy:req.session.user.email } };
+    }
+    
     collection.update(myquery, newvalues, function(err, res) {
         if (err) {
             throw err;
@@ -70,12 +93,21 @@ router.post('/', function(req,res) {
                         var newvalues = { $set: {image: fname } };
                         collection.update(myquery, newvalues, function(err, res) {
                             if (err) throw err;
-                        });  
-                        res.send({success:"Success"});   
+                        }); 
+                        res.send({success:'Success'});
                     }
                 });  
             }
     });  
+});
+
+router.delete('/:id', function(req, res){
+    var collection = db.get('products');
+    collection.remove({ _id: req.params.id }, function(err, video){
+        if (err) throw err;
+        res.send({success:'Success'});
+        //res.redirect('/manageProducts');
+    });
 });
 
 app.use('/', router);
