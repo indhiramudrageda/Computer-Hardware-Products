@@ -26,6 +26,7 @@ app.use(expressFileUpload({
 }));
 
 router.put('/:id', function(req, res) {
+    console.log(req.body);
     var collection = db.get('products');  
     var myquery = { _id: req.params.id };
     var newvalues = {};

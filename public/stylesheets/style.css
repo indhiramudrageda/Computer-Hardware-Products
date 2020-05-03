@@ -79,7 +79,7 @@ body {
 	border: 1px solid;
 }
 
-#create-product, #edit-product {
+#create-product, #edit-product, #upload-product-img {
 	display: none;
 }
 
