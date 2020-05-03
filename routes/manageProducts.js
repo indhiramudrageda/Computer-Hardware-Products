@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var monk = require('monk');
-var db = monk('localhost:27017/CHP');
+var db = monk('localhost:27017/newton');
 
 router.get('/', function(req, res, next) {
 	var collection = db.get('products');

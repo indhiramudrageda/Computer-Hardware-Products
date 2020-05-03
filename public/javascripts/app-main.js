@@ -84,6 +84,15 @@ function createProduct(event) {
 
 	event.preventDefault();
 	var form = $('#create-product-form')[0];
+	if(!$('#Stock').val().match(/([0-9])/)) {
+		$('.error-message').text('Invalid Stock value!');
+		return;
+	}
+
+	/*if(!$('#Price').val().match(/(\d+\.\d*)/)) {
+		$('.error-message').text('Invalid Price value!');
+		return;
+	}*/
 
 	var data = new FormData(form);
     $("#btnSubmit").prop("disabled", true);
@@ -99,25 +108,27 @@ function createProduct(event) {
             timeout: 600000,
             success: function (data) {
                 $("#btnSubmit").prop("disabled", false);
-				if(data.success)
-  					$('#myCreateModal').hide();
+				if(data.success) {
+					$('#myCreateModal').hide();
+					//$("#productsData").load(location.href + " #productsData");
+  					location.reload(true);
+				}
   				else {
   					$('.error-message').text(data.error);
   				}
             },
             error: function (e) {
 
-                $("#result").text(e.responseText);
+                $('.error-message').text(data.error);
                 console.log("ERROR : ", e);
                 $("#btnSubmit").prop("disabled", false);
 
             }
-        });
+    });
 }
 
 function showEditDialog(product) {
 	var p = JSON.parse(product);
-	console.log(p);
 	selectedProduct = p;
 	var modal = $('#myEditModal');
 	modal.show();
@@ -139,10 +150,15 @@ function showEditDialog(product) {
 }
 
 function updateProduct() {
+	if(!$('#EditStock').val().match(/([0-9])/)) {
+		$('.error-message').text('Invalid Stock value!');
+		return;
+	}
+
 	var updatedProduct = {
 		name: $('#EditPName').val(), 
         category: $('#EditCategory').val(), 
-        description: $('#EditPDesc').text(),
+        description: $('#EditPDesc').val(),
         status: $('#EditStatus').val(),
         stock: $('#EditStock').val(),
         price: $('#EditPrice').val(),
@@ -153,12 +169,76 @@ function updateProduct() {
   		type: 'PUT',
   		data: updatedProduct,
   		success: function(data) {
-  			if(data.success)
+  			if(data.success) {
   				$('#myEditModal').hide();
+  				location.reload(true);
+  			}
   			else {
   				$('.error-message').text(data.error);
   			}
   		}
 	});
+}
+
+function deleteProduct(product) {
+	var p = JSON.parse(product);
+	$.ajax({
+  		url: '/products/'+p._id,
+  		type: 'DELETE',
+  		success: function(data) {
+  			if(data.success) {
+  				location.reload(true);
+  			}
+  		}
+	});
+}
+
+function showUploadDialog(product) {
+	var p = JSON.parse(product);
+	selectedProduct = p;
+	var modal = $('#myUploadModal');
+	modal.show();
+  	var desc = $('#upload-product-img').html();
+  	modal.children("#upload-modal-content").html(desc);
+  	
+	var span = document.getElementsByClassName("upload-close")[0];
+	span.onclick = function() { 
+		
+		modal.hide();
+	}
+}
+
+function updateImage(event) {
+	event.preventDefault();
+	var form = $('#upload-product-form')[0];
+	var data = new FormData(form);
+    $("#btnUploadSubmit").prop("disabled", true);
+	$.ajax({
+            type: "PUT",
+            enctype: 'multipart/form-data',
+            url: "/products/"+selectedProduct._id,
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+            	$("#btnUploadSubmit").prop("disabled", false);
+				if(data.success) {
+					$('#myUploadModal').hide();
+					//$("#productsData").load(location.href + " #productsData");
+  					location.reload(true);
+				}
+  				else {
+  					$('.error-message').text(data.error);
+  				}
+            },
+            error: function (e) {
+				$("#btnUploadSubmit").prop("disabled", false);
+                $('.error-message').text(data.error);
+                console.log("ERROR : ", e);
+
+            }
+    });
 }
 

@@ -12,7 +12,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-var db = monk('localhost:27017/CHP');
+var db = monk('localhost:27017/newton');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
