@@ -4257,12 +4257,12 @@ body.is-touch #banner {
 
 .mainpage {
   display: flex;
-  height: 100vh;
+  height: 100%;
 }
 
 section#sidebar {
   position: fixed;
-  min-width: 100%;
+  min-width: inherit;
 }
 
 .navbar-side ul li {
@@ -4289,4 +4289,8 @@ section#sidebar {
 
 .sidebarbutton:focus {
   outline: none !important;
+}
+
+.sidebarbutton:active {
+  box-shadow: none !important;
 }
