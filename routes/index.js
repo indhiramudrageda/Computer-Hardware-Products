@@ -18,17 +18,26 @@ app.use(session({
 }));
 
 var monk = require('monk');
-var db = monk('localhost:27017/chp');
+var db = monk('localhost:27017/newton');
 
 
-router.get('/', function(req, res, next) {
-	console.log(req.session.email);
-	if(req.session.email) {
-		console.log(req.session.email);
-        res.render('index', {user: req.session.email, firstName : req.session.firstName});
-    } else {
-    	res.render('index');
-    }
+// router.get('/', function(req, res, next) {
+//     console.log('yolo');
+// 	console.log(req.session.email);
+// 	if(req.session.email) {
+// 		console.log(req.session.email);
+//         res.render('index', {user: req.session.email, firstName : req.session.firstName});
+//     } else {
+//     	res.render('index');
+//     }
+// });
+
+router.get('/', function(req, res) {
+	var collection = db.get('product');
+	collection.find({}, function(err, product){
+		if (err) throw err;
+	  	res.render('index', { product: product});
+	});
 });
 
 app.use('/', router);
