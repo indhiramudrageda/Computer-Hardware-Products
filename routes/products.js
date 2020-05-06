@@ -11,6 +11,22 @@ app.set('port', 9003);
 app.use(morgan('dev'));
 var db = monk('localhost:27017/newton');
 
+// router.get('/', function(req, res) {
+// 	var collection = db.get('product');
+// 	collection.find({}, function(err, product){
+// 		if (err) throw err;
+// 	  	res.json(product);
+// 	});
+// });
+
+// router.get('/:id', function(req, res) {
+// 	var collection = db.get('product');
+// 	collection.findOne({ _id: req.params.id }, function(err, prod){
+// 		if (err) throw err;
+// 	  	res.json(prod);
+// 	});
+// });
+
 function isEmptyObject(obj) {
   for (var key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
