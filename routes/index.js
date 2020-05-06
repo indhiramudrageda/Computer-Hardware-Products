@@ -22,11 +22,17 @@ app.use(
 var monk = require("monk");
 var db = monk("localhost:27017/newton");
 
-var collection = db.get("categories");
+var categoriesCollection = db.get("categories");
+var productsCollection = db.get("products");
 var categories;
-collection.find({}, function (err, res) {
+var products;
+categoriesCollection.find({}, function (err, res) {
   if (err) throw err;
   categories = res;
+});
+productsCollection.find({}, function (err, res) {
+  if (err) throw err;
+  products = res;
 });
 
 router.get("/", function (req, res, next) {
@@ -40,9 +46,11 @@ router.get("/", function (req, res, next) {
   } else {
     res.render("index", {
       categories: categories,
+      products: products
     });
   }
 });
+
 
 router.post("/", function (req, res, next) {
   console.log("cateogry: " + req.body.category);
