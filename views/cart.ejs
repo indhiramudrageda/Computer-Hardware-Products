@@ -1,0 +1,62 @@
+<%- include ('partials/header') %>
+<div class="container">
+<%if(typeof error != "undefined"){%>
+	<div class="col-6 error-message">
+			<%= error %>	
+	</div>
+<%}%>
+<div class="cart-products">
+<% cartProducts.forEach(function(cartProduct){ %>
+			<div class="product">
+				<div class="product-details">
+					<div class="row">
+						<div class="col-6">
+							<div class="row">
+								<div class="col-4">
+									<img src="images/products/<%= cartProduct.prodInfo.image %>" style="width:150px; height:150px;" class="img-thumbnail"/>
+								</div>
+								<div class="col-8" style="text-align:left;">
+									<a href="/product/<%= cartProduct.prodInfo._id %>"><span style=""><%= cartProduct.prodInfo.name %></span></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-3">
+							<label for="EditQuantity" style="display:inline;">Qty:</label>
+							<input type="text" style="width:100px;display:inline" id="EditQuantity<%= cartProduct.prodInfo._id %>" value="<%= cartProduct.quantity %>"/>
+							<button class="button primary btn-edit" onclick="UpdateQuantity('<%=JSON.stringify(cartProduct)%>');">Update</button>
+						</div>
+						<div class="col-3">
+							<h1 style="font-weight:1000;font-size:25px; float:right;">$<%= cartProduct.prodInfo.price %></h1>
+						</div>
+					</div>
+
+					<div class="row" style="padding-top:50px">
+						<div class="col-12" >
+						<button class="button primary btn-delete" style="float:right;" onclick="RemoveFromCart('<%=JSON.stringify(cartProduct)%>');">Remove</button>
+						</div>
+					</div>
+				</div>
+			</div>
+<% }); %>
+</br>
+<div class="row">
+	<div class="col-12">
+		<div style="float:right; font-size:20px;font-weight:1000;">
+			<span>Subtotal: </span> <span id="sub-total">$<%= totalAmount %></span>
+		</div>
+	</div>
+</div>
+</br>
+<div class="row">
+	<div class="col-12">
+		<div style="float:right;">
+			<button class="button primary btn-edit" style="float:right;">Proceed To Checkout</button>
+		</div>
+	</div>
+</div>
+</br>
+
+</div>
+</div>
+</div>
+<%- include ('partials/footer') %>

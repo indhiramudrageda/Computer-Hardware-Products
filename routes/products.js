@@ -26,7 +26,6 @@ app.use(expressFileUpload({
 }));
 
 router.put('/:id', function(req, res) {
-    console.log(req.body);
     var collection = db.get('products');  
     var myquery = { _id: req.params.id };
     var newvalues = {};
@@ -46,8 +45,8 @@ router.put('/:id', function(req, res) {
                                 category: req.body.category, 
                                 description: req.body.description,
                                 status: req.body.status,
-                                stock: req.body.stock,
-                                price: req.body.price,
+                                stock: parseInt(req.body.stock),
+                                price: parseInt(req.body.price),
                                 lastModifiedDate: new Date(Date.now()).toISOString(),
                                 lastModifiedBy:req.session.user.email } };
     }
@@ -63,7 +62,6 @@ router.put('/:id', function(req, res) {
 });
 
 router.post('/', function(req,res) {
-    console.log(req.body)
     var collection = db.get('products');
     collection.findOne({ name: req.body.PName }, function(err, product){
             if (product) {
@@ -73,8 +71,8 @@ router.post('/', function(req,res) {
                     name: req.body.PName,
                     category: req.body.Category,
                     description: req.body.PDesc,
-                    stock: req.body.Stock,
-                    price: req.body.Price,
+                    stock: parseInt(req.body.Stock),
+                    price: parseInt(req.body.Price),
                     status: req.body.Status,
                     createDate: new Date(Date.now()).toISOString(),
                     createdBy: req.session.user.email,
@@ -107,7 +105,6 @@ router.delete('/:id', function(req, res){
     collection.remove({ _id: req.params.id }, function(err, video){
         if (err) throw err;
         res.send({success:'Success'});
-        //res.redirect('/manageProducts');
     });
 });
 
