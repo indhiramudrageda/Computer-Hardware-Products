@@ -52,7 +52,9 @@
               <a href="/login" class="button primary">Sign In/Register</a>
               <%}%>
             </li>
+            <%if(typeof user != "undefined"){%>
             <li><a href="/cart">Cart</a></li>
+            <%}%>
           </ul>
         </nav>
       </header>
