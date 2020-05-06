@@ -182,3 +182,7 @@ top: 50%;
 .product-image:hover .upload-image-btn {
   opacity: 1;
 }
+
+.cart-products {
+  padding: 20px;
+}

@@ -30,10 +30,17 @@ router.post('/', function(req,res) {
                     createDate: new Date(Date.now()).toISOString(),
                     lastModifiedDate: new Date(Date.now()).toISOString(),
                     role:'customer'
-                }, function(err, video){
+                }, function(err, user){
                     if (err) {
                         res.render('signup', { error: 'Error creating user account!' });
-                    }   
+                    } else {
+                        db.get('carts').insert({
+                            userID: user._id.toString(),
+                            products: [],
+                            createDate: new Date(Date.now()).toISOString(),
+                            lastModifiedDate: new Date(Date.now()).toISOString()
+                        });
+                    }  
                 });
                 res.redirect('/login'); 
             });
