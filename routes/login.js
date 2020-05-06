@@ -10,17 +10,9 @@ const app = express();
 app.set('port', 9000);
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({
-    key: 'user_sid',
-    secret: 'somerandonstuffs',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        expires: 600000
-    }
-}));
 
-var db = monk('localhost:27017/CHP');
+
+var db = monk('localhost:27017/newton');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -38,8 +30,7 @@ router.post('/', function(req,res) {
                     res.render('login', { error: 'Password is incorrect!' });
                 }
                 if (result) {
-                    req.session.email = req.body.Email;
-                    req.session.firstName = user.firstName;
+                    req.session.user = user;
                     res.redirect('/');
                 } else {
                     res.render('login', { error: 'Password is incorrect!' });

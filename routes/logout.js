@@ -7,16 +7,6 @@ const app = express();
 app.set('port', 9002);
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({
-    key: 'user_sid',
-    secret: 'somerandonstuffs',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        expires: 600000
-    }
-}));
-
 
 router.get('/', function(req,res) {
     req.session.destroy((err) => {

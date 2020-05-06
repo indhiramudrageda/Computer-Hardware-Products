@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var monk = require('monk');
+const session = require('express-session');
+//const bodyParser = require('body-parser');
 
 var methodOveride = require('method-override');
 
@@ -10,8 +13,9 @@ var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
 var signupRouter = require('./routes/signup');
-//var productsRouter = require('./routes/products');
-
+var manageProductsRouter = require('./routes/manageProducts');
+var productsRouter = require('./routes/products');
+var cartRouter = require('./routes/cart');
 
 var app = express();
 
@@ -28,12 +32,34 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(methodOveride('_method'));
 
+app.use(session({
+    key: 'user_sid',
+    secret: 'somerandonstuffs',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
+}));
+
+app.use(function(req, res, next) {
+  if (req.session && req.session.user) {
+  	req.user = req.session.user;
+    delete req.user.password; // delete the password from the session
+    res.locals.user = req.session.user;
+    next();
+  } else {
+    next();
+  }
+});
 
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/logout', logoutRouter);
-//app.use('/api/products', productsRouter);
+app.use('/manageProducts', manageProductsRouter);
+app.use('/products', productsRouter);
+app.use('/cart', cartRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
