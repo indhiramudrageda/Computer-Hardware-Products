@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Newegg</title>
+		<title>NewTon</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../../stylesheets/style.css" />
@@ -21,7 +21,7 @@
 
 			<!-- Header -->
 				<header id="header">
-					<h1 id="logo"><a href="/">Newegg</a></h1> 
+					<h1 id="logo"><a href="/">NewTon</a></h1> 
 					<nav id="nav" class="navbar">
 						<ul>
 							<li>
@@ -45,7 +45,9 @@
 									<a href="/login" class="button primary">Sign In/Register</a>
 								<%}%>
 							</li>
+							<%if(typeof user != "undefined"){%>
 							<li><a href="/cart">Cart</a></li>
+							<%}%>
 						</ul>
 					</nav>
 				</header>

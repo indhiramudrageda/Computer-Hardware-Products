@@ -156,7 +156,7 @@ function updateProduct() {
 	}
 
 	var updatedProduct = {
-		name: $('#EditPName').val(), 
+		    name: $('#EditPName').val(), 
         category: $('#EditCategory').val(), 
         description: $('#EditPDesc').val(),
         status: $('#EditStatus').val(),
@@ -212,7 +212,7 @@ function updateImage(event) {
 	event.preventDefault();
 	var form = $('#upload-product-form')[0];
 	var data = new FormData(form);
-    $("#btnUploadSubmit").prop("disabled", true);
+  $("#btnUploadSubmit").prop("disabled", true);
 	$.ajax({
             type: "PUT",
             enctype: 'multipart/form-data',
@@ -225,8 +225,7 @@ function updateImage(event) {
             success: function (data) {
             	$("#btnUploadSubmit").prop("disabled", false);
 				if(data.success) {
-					$('#myUploadModal').hide();
-					//$("#productsData").load(location.href + " #productsData");
+					  $('#myUploadModal').hide();
   					location.reload(true);
 				}
   				else {
@@ -241,4 +240,55 @@ function updateImage(event) {
             }
     });
 }
+
+function UpdateQuantity(product) {
+  var p = JSON.parse(product);
+  if(!$('#EditQuantity'+p.prodInfo._id).val().match(/([0-9])/)) {
+    $('.error-message').text('Invalid quantity value!');
+    return;
+  }
+  
+	var prod = {
+		quantity : $('#EditQuantity'+p.prodInfo._id).val(),
+    productID : p.productID
+	};
+
+	$.ajax({
+            type: "PUT",
+            url: "/cart",
+            data: prod,
+            timeout: 600000,
+            success: function (data) {
+            	console.log(data);
+				      if(data.success) {
+                   $('.error-message').text('');
+                   location.reload(true);
+				      }
+  				    else {
+  					     $('.error-message').text(data.error);
+  				    }
+            },
+            error: function (e) {
+				        $("#btnUploadSubmit").prop("disabled", false);
+                $('.error-message').text(data.error);
+                console.log("ERROR : ", e);
+
+            }
+    });
+}
+
+function RemoveFromCart(product) {
+  var p = JSON.parse(product); 
+  $.ajax({
+      url: '/cart/'+p.productID,
+      type: 'DELETE',
+      success: function(data) {
+        if(data.success) {
+          location.reload(true);
+        }
+      }
+  }); 
+}
+
+
 
