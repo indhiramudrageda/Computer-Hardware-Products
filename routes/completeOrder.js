@@ -53,7 +53,23 @@ router.post('/', function(req, res, next) {
             			res.send({error:'Adding to Cart has failed!'});
         			}
         			res.render('completeOrder', {orderID: order._id});
-    			});
+                });
+
+                console.log('testing pdate');
+                var collection = db.get('products');
+                for(i in products){
+                    console.log(products[i].productID);
+                    console.log(products[i].quantity);
+                    
+                    db.get('products').update({'_id':products[i].productID}, {$inc: {stock : -products[i].quantity}}, {w:1}, function(err, result){
+                        if (err) {
+                            throw err;
+                        }
+                    });
+                    console.log('update done');
+
+                }
+              
             }
     });
     
