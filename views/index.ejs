@@ -38,10 +38,10 @@
 
 	<div class="container mt-3" style="display: flex; flex-wrap: wrap; justify-content: center; padding-left: 0; padding-right: 0;">
 			<% products.forEach(function(product){ %>
-			<div class="card-deck" style="margin-right:0.05px" style="cursor: pointer">
+			<div class="card-deck" style="margin-right:0.05px" >
 			<div class="card mb-4" style="min-width: 16rem; max-width: 18rem;">
 				<div class="card-image">
-					<img class="bd-placeholder-img card-img-top" src="images/products/<%= product.image %>" alt="Card image cap" onclick="location.href = 'http://localhost:3000/show/<%= product._id %>'">
+					<img class="bd-placeholder-img card-img-top" src="images/products/<%= product.image %>" style="cursor: pointer" alt="Card image cap" onclick="location.href = 'http://localhost:3000/show/<%= product._id %>'">
 
 					<%if(typeof user != "undefined" && user.role == 'admin'){%>
 						<div class="admin-actions">
@@ -51,7 +51,7 @@
 					<%}%>
 				</div>
 				
-				<div class="card-body" onclick="location.href = 'http://localhost:3000/show/<%= product._id %>'">	
+				<div class="card-body" style="cursor: pointer" onclick="location.href = 'http://localhost:3000/show/<%= product._id %>'">	
 					<h5 class="card-title" style="color: black;"><%= product.name %></h5>
 					<h4 class="card-title" style="color: black;">$<%= product.price %></h5>
 					<p class="card-text" style="color: black; font-size:20px"><%= product.Description %></p>
