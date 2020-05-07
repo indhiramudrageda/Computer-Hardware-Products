@@ -2,8 +2,16 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+.navbar {
+  padding: 0em 0em;
+}
+
 .navbar-brand {
 	color: white!important;
+}
+
+#registerBtn:hover, #logo:hover {
+  text-decoration: none;
 }
 
 #login, #signup {
