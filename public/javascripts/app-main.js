@@ -248,6 +248,7 @@ function updateImage(event) {
 }
 
 function UpdateQuantity(product) {
+  event.preventDefault();
   var p = JSON.parse(product);
   if(!$('#EditQuantity'+p.prodInfo._id).val().match(/([0-9])/)) {
     $('.error-message').text('Invalid quantity value!');
@@ -284,6 +285,7 @@ function UpdateQuantity(product) {
 }
 
 function RemoveFromCart(product) {
+  event.preventDefault();
   var p = JSON.parse(product); 
   $.ajax({
       url: '/cart/'+p.productID,

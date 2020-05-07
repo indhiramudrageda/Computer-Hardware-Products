@@ -14,8 +14,14 @@ body {
 	text-align:right;
 }
 
+#registerBtn:hover, #logo:hover {
+  text-decoration: none;
+}
+
+
 #login button, #signup button, #myCreateModal button, #myEditModal button,  #myUploadModal button{
 	float: right;
+  font-size: 12px;
 }
 
 .error-message {
