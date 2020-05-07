@@ -1,4 +1,18 @@
 <%- include ('partials/header') %>
+<script>
+  $(function () {
+    $(".hiddenTD").hide();
+    $("table").click(function (event) {
+      event.stopPropagation();
+      var $target = $(event.target);
+      if ($target.closest("td").attr("colspan") > 1) {
+        $target.slideUp();
+      } else {
+        $target.closest("tr").next().find("td").slideToggle();
+      }
+    });
+  });
+</script>
 <div class="container">
   <div class="row aln-center mt-2">
     <h2>Order History</h2>
@@ -9,26 +23,31 @@
       <thead>
         <tr>
           <th>ORDER</th>
-          <th>DATE</th>
-          <th>STATUS</th>
+          <th>DATE ORDERED</th>
           <th>TOTAL</th>
           <th>ACTIONS</th>
         </tr>
       </thead>
       <tbody>
-        <% orders.forEach(function(order){ var yearOfDate =
-        order.dateOrdered.getFullYear() ; var month =
-        months[order.dateOrdered.getMonth()]; var date =
-        order.dateOrdered.getDate(); var showDate = month + " " + date + ", " +
-        yearOfDate;%>
-        <tr>
-          <td><%= order.orderNumber %></td>
+        <% orders.forEach(function(order){ var dateFromSrc = new
+        Date(order.orderDate); var yearOfDate = dateFromSrc.getFullYear() ; var
+        month = months[dateFromSrc.getMonth()]; var date =
+        dateFromSrc.getDate(); var showDate = month + " " + date + ", " +
+        yearOfDate; var products = ""; order.products.forEach(function(product)
+        { products += "Product: " + product.name + " quantity: " +
+        product.quantity + " status: " + product.status + ", " }); %>
+        <tr class="orderhistorytable">
+          <td><%= order._id %></td>
           <td><%= showDate %></td>
-          <td><%= order.status %></td>
-          <td><%= order.total %></td>
-          <td><button>View</button></td>
+          <td><%= order.totalAmount %></td>
+          <td><button>Details</button></td>
         </tr>
-        <% }); %>
+        <tr>
+          <td class="hiddenTD orderhistorytable" colspan="6">
+            <%- products %>
+          </td>
+        </tr>
+        <%}); %>
       </tbody>
     </table>
   </div>

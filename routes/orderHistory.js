@@ -3,6 +3,7 @@ var router = express.Router();
 var monk = require("monk");
 var db = monk("localhost:27017/newton");
 const app = express();
+const { ObjectId } = require("mongodb");
 
 const monthNames = [
   "January",
@@ -19,26 +20,31 @@ const monthNames = [
   "December",
 ];
 
-var orderHistory = [
-  {
-    orderNumber: 1,
-    dateOrdered: new Date(2020, 1, 24),
-    status: "COMPLETED",
-    total: 5.78,
-  },
-  {
-    orderNumber: 29,
-    dateOrdered: new Date(2020, 2, 12),
-    status: "COMPLETED",
-    total: 12.44,
-  },
-];
+var ordersCollection = db.get("orders");
+var orders;
+
+function renderOrderHistory(req, res, error) {
+  var userID = req.session.user._id;
+  ordersCollection.find({ userID: ObjectId(userID.toString()) }, function (
+    err,
+    result
+  ) {
+    if (err) throw err;
+    orders = result;
+    console.log(orders);
+    res.render("history", {
+      orders: orders,
+      months: monthNames,
+    });
+  });
+}
 
 router.get("/", function (req, res, next) {
-  res.render("history", {
-    orders: orderHistory,
-    months: monthNames,
-  });
+  console.log(req.session.user);
+  if (!req.session.user || (!req, session.user._id)) {
+    res.redirect("/login");
+  }
+  renderOrderHistory(req, res, "");
 });
 
 app.use("/", router);
