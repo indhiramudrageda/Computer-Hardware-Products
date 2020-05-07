@@ -120,7 +120,6 @@ router.put('/', function(req,res) {
 
 router.delete('/:id', function(req, res){
     var collection = db.get('carts');
-    console.log(req.params.id);
     collection.update({ userID: req.session.user._id.toString() }, {$pull: { products: {productID: ObjectId(req.params.id)}}}, function(err, result) {
         if (err) {
             throw err;

@@ -6,6 +6,9 @@
 	</div>
 <%}%>
 <form action="/checkout" method="POST">
+	<input type="hidden" value="dummy" name="productID"/>
+	<input type="hidden" value="dummy" name="quantity"/>
+	<input type="hidden" value="dummy" name="price"/>
 <div class="cart-products">
 <% cartProducts.forEach(function(cartProduct){ %>
 			<div class="product">
@@ -56,7 +59,14 @@
 <div class="row">
 	<div class="col-12">
 		<div style="float:right;">
+			<% if(cartProducts.length == 0) {%>
+			<button class="button primary btn-edit" style="float:right;font-size:15px" type="submit" disabled>Proceed To Checkout</button>
+			<% } %>
+
+			<%if(cartProducts.length > 0){%>
 			<button class="button primary btn-edit" style="float:right;font-size:15px" type="submit">Proceed To Checkout</button>
+			<% } %>
+
 		</div>
 	</div>
 </div>
