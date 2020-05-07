@@ -45,7 +45,9 @@ router.put('/:id', function(req, res) {
     var collection = db.get('products');  
     var myquery = { _id: req.params.id };
     var newvalues = {};
-    if(isEmptyObject(req.body)) {
+    console.log(req.files);
+    console.log(req.body);
+    if(req.files != null && !isEmptyObject(req.files)) {
         let sampleFile = req.files.EditsampleFile;
         var fname = sampleFile.name;
         fname = req.params.id.toString()+fname.substring(fname.lastIndexOf("."));
@@ -54,15 +56,21 @@ router.put('/:id', function(req, res) {
         });
 
         newvalues = { $set: {   image: fname,
+                                name: req.body.EditPName, 
+                                category: req.body.EditCategory, 
+                                description: req.body.EditPDesc.replace(/\n/g, "\\n").replace(/\r/g, "\\r"),
+                                status: req.body.EditStatus,
+                                stock: parseInt(req.body.EditStock),
+                                price: parseFloat(req.body.EditPrice),
                                 lastModifiedDate: new Date(Date.now()).toISOString(),
                                 lastModifiedBy:req.session.user.email } };
     } else {
-        newvalues = { $set: {   name: req.body.name, 
-                                category: req.body.category, 
-                                description: req.body.description,
-                                status: req.body.status,
-                                stock: parseInt(req.body.stock),
-                                price: parseInt(req.body.price),
+        newvalues = { $set: {   name: req.body.EditPName, 
+                                category: req.body.EditCategory, 
+                                description: req.body.EditPDesc.replace(/\n/g, "\\n").replace(/\r/g, "\\r"),
+                                status: req.body.EditStatus,
+                                stock: parseInt(req.body.EditStock),
+                                price: parseFloat(req.body.EditPrice),
                                 lastModifiedDate: new Date(Date.now()).toISOString(),
                                 lastModifiedBy:req.session.user.email } };
     }
@@ -78,6 +86,7 @@ router.put('/:id', function(req, res) {
 });
 
 router.post('/', function(req,res) {
+    console.log(req.body);
     var collection = db.get('products');
     collection.findOne({ name: req.body.PName }, function(err, product){
             if (product) {
@@ -86,9 +95,9 @@ router.post('/', function(req,res) {
                 collection.insert({
                     name: req.body.PName,
                     category: req.body.Category,
-                    description: req.body.PDesc,
+                    description: req.body.PDesc.replace(/\n/g, "\\n").replace(/\r/g, "\\r"),
                     stock: parseInt(req.body.Stock),
-                    price: parseInt(req.body.Price),
+                    price: parseFloat(req.body.Price),
                     status: req.body.Status,
                     createDate: new Date(Date.now()).toISOString(),
                     createdBy: req.session.user.email,
