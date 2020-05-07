@@ -54,7 +54,7 @@ router.post("/", function (req, res, next) {
         res.render("search", {
           products: prod,
           categories: categories,
-          searched: value,
+          searched: value
         });
       }
     );
@@ -108,6 +108,7 @@ router.post("/", function (req, res, next) {
     products: products,
   });
 });
+
 
 app.use("/", router);
 module.exports = app;
