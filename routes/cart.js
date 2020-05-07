@@ -53,19 +53,20 @@ function renderCart(req,res,error) {
                 total: { $sum: { $multiply: [ "$prodInfo.price", "$quantity" ] } }
             }}
         ], function(err, amount) {
-            res.render('cart', {cartProducts : result, totalAmount: amount[0].total, error:error});
+            if(isEmptyObject(amount))
+                res.render('cart', {cartProducts : result, totalAmount: 0.0, error:error});
+            else
+                res.render('cart', {cartProducts : result, totalAmount: amount[0].total, error:error});
         });
     });
 }
-/* GET users listing. */
+
 router.get('/', function(req, res, next) {
-    
     renderCart(req,res,'');
 });
 
 router.post('/', function(req,res) {
     var collection = db.get('carts');
- 
     collection.find({ userID: req.session.user._id.toString(), "products.productID": ObjectId(req.body.productID)}, function(err, cart){
         if(cart.length == 0) {
             collection.update({ userID: req.session.user._id.toString() }, {$push: { products: {productID: ObjectId(req.body.productID), quantity: 1}}}, { upsert: true }, function(err, result) {
