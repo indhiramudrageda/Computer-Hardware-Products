@@ -35,41 +35,53 @@ categoriesCollection.find({}, function (err, res) {
   categories = res;
 });
 
-async function fetchProducts(category) {
+async function fetchProducts(category, showInactive) {
   return new Promise(function (resolve, reject) {
     if (!category) {
-      productsCollection.find({}, function (err, res) {
-        if (err) reject();
-        resolve(res);
-      });
+        if(showInactive) {
+            productsCollection.find({}, function (err, res) {
+              if (err) reject();
+              resolve(res);
+            });
+        } else {
+            productsCollection.find({status:'Active'}, function (err, res) {
+              if (err) reject();
+              resolve(res);
+            });
+        }
+        
     }
 
-    productsCollection.find({ category: category }, function (err, res) {
-      if (err) reject();
-      resolve(res);
-    });
+    if(showInactive) {
+            productsCollection.find({ category: category }, function (err, res) {
+                if (err) reject();
+                resolve(res);
+            });
+    } else {
+            productsCollection.find({ category: category, status:'Active' }, function (err, res) {
+                if (err) reject();
+                resolve(res);
+            });
+    }
+    
   });
 }
 
 router.get("/", async function (req, res, next) {
-  console.log(req.session.email);
+
   var passedCategory = req.query.category;
   global.category = passedCategory;
-  var products = await fetchProducts(passedCategory);
-  console.log(products);
-  if (req.session.email) {
-    console.log(req.session.email);
-    res.render("index", {
-      user: req.session.email,
-      firstName: req.session.firstName,
-    });
-  } else {
-    console.log(products);
+  var showInactive = false;
+  if(req.user && req.user.role == 'admin')
+      showInactive = true;
+  var products = await fetchProducts(passedCategory, showInactive);
+  
+
     res.render("index", {
       categories: categories,
       products: products,
     });
-  }
+  
 });
 
 router.post("/", function (req, res, next) {
