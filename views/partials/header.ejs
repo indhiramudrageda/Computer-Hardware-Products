@@ -12,16 +12,21 @@
       name="viewport"
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
-    
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="../../stylesheets/style.css" />
     <link rel="stylesheet" href="../../assets/css/main.css" />
     <script type="text/javascript" src="../../javascripts/app-main.js"></script>
     <script src="../../assets/js/jquery.min.js"></script>
-		<script type="text/javascript" src="../../javascripts/app-main.js"></script>
-    <noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
-    
-    
+    <script type="text/javascript" src="../../javascripts/app-main.js"></script>
+    <noscript
+      ><link rel="stylesheet" href="../../assets/css/noscript.css"
+    /></noscript>
   </head>
   <body class="is-preload">
     <div id="page-wrapper">
@@ -31,7 +36,11 @@
         <nav id="nav" class="navbar main-nav">
           <ul>
             <li>
-              <form class="form-inline mt-2 mt-md-0" action="/search"  method="POST">
+              <form
+                class="form-inline mt-2 mt-md-0"
+                action="/search"
+                method="POST"
+              >
                 <input
                   class="form-control mr-sm-2"
                   name="search"
@@ -39,7 +48,11 @@
                   placeholder="Search"
                   aria-label="Search"
                 />
-                
+                <input
+                  name="category"
+                  type="hidden"
+                  value="<%= global.category %>"
+                />
               </form>
             </li>
             <li>
@@ -50,13 +63,19 @@
                 <li><a href="/logout">Logout</a></li>
               </ul>
               <%}%> <%if(typeof user == "undefined"){%>
-              <a href="/login" class="button primary" id="registerBtn">Sign In/Register</a>
+              <a href="/login" class="button primary" id="registerBtn"
+                >Sign In/Register</a
+              >
               <%}%>
             </li>
             <%if(typeof user != "undefined"){%>
-            <li><a href="/cart"><i class="fas fa-shopping-cart"></i></a></li>
+            <li>
+              <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
+            </li>
             <%}%>
           </ul>
         </nav>
       </header>
     </div>
+  </body>
+</html>

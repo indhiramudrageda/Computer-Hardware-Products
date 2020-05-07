@@ -37,32 +37,65 @@ productsCollection.find({}, function (err, res) {
 });
 
 //search
-router.post('/', function (req, res, next) {
-    var value = req.body.search;
-    console.log("test");
-    console.log('yolooooooo '+value);
-    if(value!=""){
-        // var valueSearch = "/^" + value + "$/i";
-        // console.log(valueSearch);
-        // productsCollection.find({"name": {'$regex': value, $options: 'i' },"Description": {'$regex': value, $options: 'i' }}, function(err, prod){
-        productsCollection.find({$or:[
-          {"name":{'$regex': value, $options: 'i' }},
-          {"Description":{'$regex': value, $options: 'i' }}
-      ]}, function(err, prod){
-           if (err) throw err;
-             console.log(prod);
-             res.render('search', { products: prod, categories: categories});
+router.post("/", function (req, res, next) {
+  var value = req.body.search;
+  console.log("category: " + req.body.category);
+  if (!!value && !category) {
+    productsCollection.find(
+      {
+        $or: [
+          { name: { $regex: value, $options: "i" } },
+          { Description: { $regex: value, $options: "i" } },
+        ],
+      },
+      function (err, prod) {
+        if (err) throw err;
+        console.log(prod);
+        res.render("search", {
+          products: prod,
+          categories: categories,
+          searched: value,
         });
-    } else {
-      res.render("index", {
-        categories: categories,
-        products: products,
-      });
-    }
-  });
-
-
-
+      }
+    );
+  } else if (!!value && !!category) {
+    productsCollection.find(
+      {
+        $and: [
+          {
+            $or: [
+              { name: { $regex: value, $options: "i" } },
+              {
+                Description: {
+                  $regex: value,
+                  $options: "i",
+                },
+              },
+            ],
+          },
+          {
+            category: { $regex: category, $options: "i" },
+          },
+        ],
+      },
+      function (err, prod) {
+        if (err) throw err;
+        console.log(prod);
+        res.render("search", {
+          products: prod,
+          categories: categories,
+          searched: value,
+          category: category,
+        });
+      }
+    );
+  } else {
+    res.render("index", {
+      categories: categories,
+      products: products,
+    });
+  }
+});
 
 router.post("/", function (req, res, next) {
   var { category } = req.body;
@@ -78,6 +111,4 @@ router.post("/", function (req, res, next) {
 
 app.use("/", router);
 module.exports = app;
-app.listen(8000, () =>
-  console.log(`App started on port ${app.get("port")}`)
-);
+app.listen(8000, () => console.log(`App started on port ${app.get("port")}`));
