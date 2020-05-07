@@ -22,14 +22,11 @@ app.use(
 var monk = require("monk");
 var db = monk("localhost:27017/newton");
 
-router.get('/search', function(req, res) {
-	res.render('search');
-});
-
 var categoriesCollection = db.get("categories");
 var productsCollection = db.get("products");
 var categories;
 var products;
+
 categoriesCollection.find({}, function (err, res) {
   if (err) throw err;
   categories = res;
@@ -39,25 +36,33 @@ productsCollection.find({}, function (err, res) {
   products = res;
 });
 
-router.get("/", function (req, res, next) {
-  console.log(req.session.email);
-  productsCollection.find({}, function (err, res) {
-    if (err) throw err;
-    products = res;
+//search
+router.post('/', function (req, res, next) {
+    var value = req.body.search;
+    console.log("test");
+    console.log('yolooooooo '+value);
+    if(value!=""){
+        // var valueSearch = "/^" + value + "$/i";
+        // console.log(valueSearch);
+        // productsCollection.find({"name": {'$regex': value, $options: 'i' },"Description": {'$regex': value, $options: 'i' }}, function(err, prod){
+        productsCollection.find({$or:[
+          {"name":{'$regex': value, $options: 'i' }},
+          {"Description":{'$regex': value, $options: 'i' }}
+      ]}, function(err, prod){
+           if (err) throw err;
+             console.log(prod);
+             res.render('search', { products: prod, categories: categories});
+        });
+    } else {
+      res.render("index", {
+        categories: categories,
+        products: products,
+      });
+    }
   });
-  if (req.session.email) {
-    console.log(req.session.email);
-    res.render("index", {
-      user: req.session.email,
-      firstName: req.session.firstName,
-    });
-  } else {
-    res.render("index", {
-      categories: categories,
-      products: products,
-    });
-  }
-});
+
+
+
 
 router.post("/", function (req, res, next) {
   var { category } = req.body;
@@ -71,14 +76,8 @@ router.post("/", function (req, res, next) {
   });
 });
 
-
-router.get("/search",function(req, res, next){
-    console.log("I was here");
-    res.redirect("/");
-})
-
 app.use("/", router);
 module.exports = app;
-app.listen(app.get("port"), () =>
+app.listen(8000, () =>
   console.log(`App started on port ${app.get("port")}`)
 );
