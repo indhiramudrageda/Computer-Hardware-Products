@@ -37,6 +37,10 @@ productsCollection.find({}, function (err, res) {
 
 router.get("/", function (req, res, next) {
   console.log(req.session.email);
+  productsCollection.find({}, function (err, res) {
+    if (err) throw err;
+    products = res;
+  });
   if (req.session.email) {
     console.log(req.session.email);
     res.render("index", {
@@ -46,16 +50,20 @@ router.get("/", function (req, res, next) {
   } else {
     res.render("index", {
       categories: categories,
-      products: products
+      products: products,
     });
   }
 });
 
-
 router.post("/", function (req, res, next) {
-  console.log("cateogry: " + req.body.category);
+  var { category } = req.body;
+  productsCollection.find({ category: category }, function (err, res) {
+    if (err) throw err;
+    products = res;
+  });
   res.render("index", {
     categories: categories,
+    products: products,
   });
 });
 
