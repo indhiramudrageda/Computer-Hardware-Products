@@ -61,7 +61,7 @@ router.put('/:id', function(req, res) {
                                 description: req.body.EditPDesc.replace(/\n/g, "\\n").replace(/\r/g, "\\r"),
                                 status: req.body.EditStatus,
                                 stock: parseInt(req.body.EditStock),
-                                price: parseInt(req.body.EditPrice),
+                                price: parseFloat(req.body.EditPrice),
                                 lastModifiedDate: new Date(Date.now()).toISOString(),
                                 lastModifiedBy:req.session.user.email } };
     } else {
@@ -70,7 +70,7 @@ router.put('/:id', function(req, res) {
                                 description: req.body.EditPDesc.replace(/\n/g, "\\n").replace(/\r/g, "\\r"),
                                 status: req.body.EditStatus,
                                 stock: parseInt(req.body.EditStock),
-                                price: parseInt(req.body.EditPrice),
+                                price: parseFloat(req.body.EditPrice),
                                 lastModifiedDate: new Date(Date.now()).toISOString(),
                                 lastModifiedBy:req.session.user.email } };
     }
@@ -97,7 +97,7 @@ router.post('/', function(req,res) {
                     category: req.body.Category,
                     description: req.body.PDesc.replace(/\n/g, "\\n").replace(/\r/g, "\\r"),
                     stock: parseInt(req.body.Stock),
-                    price: parseInt(req.body.Price),
+                    price: parseFloat(req.body.Price),
                     status: req.body.Status,
                     createDate: new Date(Date.now()).toISOString(),
                     createdBy: req.session.user.email,
