@@ -22,8 +22,8 @@ app.use(
 var monk = require("monk");
 var db = monk("localhost:27017/newton");
 
-router.get('/search', function(req, res) {
-	res.render('search');
+router.get("/search", function (req, res) {
+  res.render("search");
 });
 
 var categoriesCollection = db.get("categories");
@@ -54,6 +54,7 @@ async function fetchProducts(category) {
 router.get("/", async function (req, res, next) {
   console.log(req.session.email);
   var passedCategory = req.query.category;
+  global.category = passedCategory;
   var products = await fetchProducts(passedCategory);
   console.log(products);
   if (req.session.email) {
@@ -76,12 +77,6 @@ router.post("/", function (req, res, next) {
   category = encodeURIComponent(category);
   res.redirect("/?category=" + category);
 });
-
-
-router.get("/search",function(req, res, next){
-    console.log("I was here");
-    res.redirect("/");
-})
 
 app.use("/", router);
 module.exports = app;

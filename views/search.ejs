@@ -2,12 +2,15 @@
 <br/>
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-3 col-md-12 col-lg-4">
+		<div class="col-sm-3 col-md-3 col-lg-2" style="border-right: 1px solid #ffffff38;">
 			<%-include ('partials/sidebar') %>
 		</div>
 		  
-		<div class="col-sm-9 col-md-12 col-lg-8">
+		<div class="col-sm-9 col-md-12 col-lg-10">
 			<div class="container mt-3">
+                <h3>Showing results for: 
+                    <%= searched %> <%= category ? `in category: ${category}` : '' %>
+                </h3> 
                 <div class="row">
                     <div class="card-deck">
                         <% products.forEach(function(product){ %>
