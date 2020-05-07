@@ -88,10 +88,10 @@ function createProduct(event) {
 		return;
 	}
 
-	if(!$('#Price').val().match(/^[0-9]+\.[0-9]+$/)) {
+	/*if(!$('#Price').val().match(/^[0-9]+\.[0-9]+$/)) {
     $('.error-message').text('Invalid Price value!');
     return;
-  }
+  }*/
 
 	var data = new FormData(form);
   $("#btnSubmit").prop("disabled", true);
@@ -156,10 +156,10 @@ function updateProduct() {
 		return;
 	}
 
-  if(!$('#EditPrice').val().match(/^[0-9]+\.[0-9]+$/)) {
+  /*if(!$('#EditPrice').val().match(/^[0-9]+\.[0-9]+$/)) {
     $('.error-message').text('Invalid Price value!');
     return;
-  }
+  }*/
 
   var data = new FormData(form);
   $("#UBtnSubmit").prop("disabled", true);
