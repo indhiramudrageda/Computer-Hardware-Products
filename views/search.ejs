@@ -34,21 +34,24 @@
                                 <div class="card-body">	
                                     <h5 class="card-title" style="color: black;"><%= product.name %></h5>
                                     <h4 class="card-title" style="color: black;">$<%= product.price %></h5>
+                                    <%if(product.stock == 0){%>
+                                        <h4 style="color:red;">OUT OF STOCK!</h4>
+                                    <%}%>
                                     <p class="card-text" style="color: black; font-size:20px"><%= product.Description %></p>
                                 </div>
     
                                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="display: flex;align-items: center; justify-content: center; width: 100%; height: 20%;">
-                                    <%if(typeof user != "undefined"){%>
+                                    <%if(typeof user != "undefined" && product.status != 'Inactive' && product.stock > 0){%>
                                         <form action="/cart" method="POST">  
                                             <input type="hidden" name="productID" value="<%= product._id %>">
                                             <button type="submit" class="btn btn-success">Add to cart</button>
                                         </form> 
-                                        <%}%>
-                                        <%if(typeof user == "undefined"){%>
-                                            <form action="/login" method="GET">
+                                    <%}%>
+                                    <%if(typeof user == "undefined" && product.status != 'Inactive' && product.stock > 0){%>
+                                        <form action="/login" method="GET">
                                                 <button type="submit" class="btn btn-success">Add to cart</button>
-                                            </form> 
-                                            <%}%>
+                                        </form> 
+                                    <%}%>
                                 </div>
                             </div>
                         <% }); %>
