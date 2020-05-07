@@ -19,13 +19,7 @@ var db = monk('localhost:27017/newton');
 // 	});
 // });
 
-// router.get('/:id', function(req, res) {
-// 	var collection = db.get('product');
-// 	collection.findOne({ _id: req.params.id }, function(err, prod){
-// 		if (err) throw err;
-// 	  	res.json(prod);
-// 	});
-// });
+
 
 function isEmptyObject(obj) {
   for (var key in obj) {

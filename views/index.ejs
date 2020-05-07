@@ -51,9 +51,11 @@
 								<div class="btn-group mr-2" role="group" aria-label="First group">
 									<button type="button" class="btn btn-success">Add to cart</button>
 								</div>
+								<%if((typeof user != "undefined") && user.role == 'admin'){%>
 								<div class="btn-group mr-2" role="group" aria-label="Second group">
 									<button type="button" class="btn btn-warning" href="#">Update</button>
 								</div>
+								<%}%>
 							</div>
 						</div>
 					<% }); %>
