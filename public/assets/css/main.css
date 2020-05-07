@@ -3670,6 +3670,9 @@ body.is-touch #banner {
   background: #272833;
   padding: 2em 0;
   text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 #footer .icons .icon.alt {
@@ -4295,4 +4298,6 @@ section#sidebar {
   box-shadow: none !important;
 }
 
-
+.mt-2 {
+  margin-top: 2em;
+}
