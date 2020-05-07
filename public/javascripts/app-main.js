@@ -81,7 +81,6 @@ function showCreateDialog() {
 }
 
 function createProduct(event) {
-
 	event.preventDefault();
 	var form = $('#create-product-form')[0];
 	if(!$('#Stock').val().match(/([0-9])/)) {
@@ -95,7 +94,7 @@ function createProduct(event) {
 	}*/
 
 	var data = new FormData(form);
-    $("#btnSubmit").prop("disabled", true);
+  $("#btnSubmit").prop("disabled", true);
 
 	$.ajax({
             type: "POST",
@@ -108,14 +107,14 @@ function createProduct(event) {
             timeout: 600000,
             success: function (data) {
                 $("#btnSubmit").prop("disabled", false);
-				if(data.success) {
-					$('#myCreateModal').hide();
-					//$("#productsData").load(location.href + " #productsData");
-  					location.reload(true);
-				}
-  				else {
-  					$('.error-message').text(data.error);
-  				}
+				        if(data.success) {
+					         $('#myCreateModal').hide();
+					         //$("#productsData").load(location.href + " #productsData");
+  					       location.reload(true);
+				        }
+  				      else {
+  					       $('.error-message').text(data.error);
+  				      }
             },
             error: function (e) {
 
@@ -150,30 +149,32 @@ function showEditDialog(product) {
 }
 
 function updateProduct() {
+  event.preventDefault();
+  var form = $('#update-product-form')[0];
 	if(!$('#EditStock').val().match(/([0-9])/)) {
 		$('.error-message').text('Invalid Stock value!');
 		return;
 	}
 
-	var updatedProduct = {
-		    name: $('#EditPName').val(), 
-        category: $('#EditCategory').val(), 
-        description: $('#EditPDesc').val(),
-        status: $('#EditStatus').val(),
-        stock: $('#EditStock').val(),
-        price: $('#EditPrice').val(),
-	};
+  var data = new FormData(form);
+  $("#UBtnSubmit").prop("disabled", true);
 
 	$.ajax({
   		url: '/products/'+selectedProduct._id,
   		type: 'PUT',
-  		data: updatedProduct,
+      enctype: 'multipart/form-data',
+  		data: data,
+      processData: false,
+      contentType: false,
+      timeout: 600000,
   		success: function(data) {
+        $("#UBtnSubmit").prop("disabled", false);
   			if(data.success) {
   				$('#myEditModal').hide();
   				location.reload(true);
   			}
   			else {
+          $("#UBtnSubmit").prop("disabled", false);
   				$('.error-message').text(data.error);
   			}
   		}

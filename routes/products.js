@@ -86,6 +86,7 @@ router.put('/:id', function(req, res) {
 });
 
 router.post('/', function(req,res) {
+    console.log(req.body);
     var collection = db.get('products');
     collection.findOne({ name: req.body.PName }, function(err, product){
             if (product) {
@@ -94,7 +95,7 @@ router.post('/', function(req,res) {
                 collection.insert({
                     name: req.body.PName,
                     category: req.body.Category,
-                    description: req.body.description.replace(/\n/g, "\\n").replace(/\r/g, "\\r"),
+                    description: req.body.PDesc.replace(/\n/g, "\\n").replace(/\r/g, "\\r"),
                     stock: parseInt(req.body.Stock),
                     price: parseInt(req.body.Price),
                     status: req.body.Status,
