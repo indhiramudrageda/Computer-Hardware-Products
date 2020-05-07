@@ -12,9 +12,50 @@ function validateSignup() {
   	if (!$('#Email').val().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
   		$('.Email-error-message').css('display','inline');
   		$('.Email-error-message').text('Email is not valid');
-		return false;
-	}
-	return true;
+		  return false;
+	 } 
+   if ($('#FirstName').val() == '') {
+      $('.FirstName-error-message').css('display','inline');
+      $('.FirstName-error-message').text('FirstName is mandatory');
+    return false;
+  }
+  if ($('#LastName').val() == '') {
+      $('.LastName-error-message').css('display','inline');
+      $('.LastName-error-message').text('LastName is mandatory');
+    return false;
+  }
+  if ($('#Phone').val() == '') {
+      $('.Phone-error-message').css('display','inline');
+      $('.Phone-error-message').text('Phone is mandatory');
+    return false;
+  }
+  if ($('#Address').val() == '') {
+      $('.Address-error-message').css('display','inline');
+      $('.Address-error-message').text('Address is mandatory');
+    return false;
+  }
+  if ($('#Password').val() == '') {
+      $('.Password-error-message').css('display','inline');
+      $('.Password-error-message').text('Address is mandatory');
+    return false;
+  }
+}
+
+async function validateEmail(argument) {
+  if($('#Email').val() == '')
+    return;
+  const result = await $.ajax({
+      url: '/signup/'+$('#Email').val(),
+      type: 'GET' 
+  });
+  console.log(result);
+  if(result.success) {
+        $('.Email-error-message').css('display','inline');
+        $('.Email-error-message').text('An account already exists with this email!');
+  } else {
+        $('.Email-error-message').css('display','none');
+        $('.Email-error-message').text('');
+  }
 }
 
 function checkPasswordStrength() {
