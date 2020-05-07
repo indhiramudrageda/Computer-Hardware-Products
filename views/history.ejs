@@ -33,9 +33,9 @@
         Date(order.orderDate); var yearOfDate = dateFromSrc.getFullYear() ; var
         month = months[dateFromSrc.getMonth()]; var date =
         dateFromSrc.getDate(); var showDate = month + " " + date + ", " +
-        yearOfDate; var products = ""; order.products.forEach(function(product)
-        { products += "Product: " + product.name + " quantity: " +
-        product.quantity + " status: " + product.status + ", " }); %>
+        yearOfDate; var products = `Product: Macbook Pro 13 Inch, Price: $1450,
+        Status: In Transit`; %>
+
         <tr class="orderhistorytable">
           <td><%= order._id %></td>
           <td><%= showDate %></td>
