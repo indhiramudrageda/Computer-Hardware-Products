@@ -44,10 +44,14 @@ router.get("/", function (req, res, next) {
       firstName: req.session.firstName,
     });
   } else {
-    res.render("index", {
+    productsCollection.find({}, function (err, result) {
+        if (err) throw err;
+            res.render("index", {
       categories: categories,
-      products: products
+      products: result
     });
+  });
+    
   }
 });
 

@@ -111,6 +111,17 @@ body {
   background-color: rgba(39, 40, 51, 0.965); /* Black w/ opacity */
 }
 
+.card-image {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.admin-actions {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
 
 #create-modal-content, #edit-modal-content, #upload-modal-content  {
   display: block;
