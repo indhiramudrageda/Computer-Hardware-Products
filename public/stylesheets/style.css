@@ -16,6 +16,7 @@ body {
 
 #login button, #signup button, #myCreateModal button, #myEditModal button,  #myUploadModal button{
 	float: right;
+  font-size:12px;
 }
 
 .error-message {
@@ -158,6 +159,10 @@ body {
   color: #bbb;
   text-decoration: none;
   cursor: pointer;
+}
+
+#addNewProduct {
+  float: right;
 }
 
 .product {
