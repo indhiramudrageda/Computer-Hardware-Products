@@ -68,6 +68,10 @@ body {
     display:block;
 }
 
+.sidebarbutton:hover {
+    color:#e44c65;
+}
+
 .invalid {
     background:url(../../images/cross.png) no-repeat 0 50%;
     padding-left:22px;
