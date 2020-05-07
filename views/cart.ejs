@@ -24,7 +24,7 @@
 						<div class="col-3">
 							<label for="EditQuantity" style="display:inline;">Qty:</label>
 							<input type="text" style="width:100px;display:inline" id="EditQuantity<%= cartProduct.prodInfo._id %>" value="<%= cartProduct.quantity %>"/>
-							<button class="button primary btn-edit" onclick="UpdateQuantity('<%=JSON.stringify(cartProduct)%>');">Update</button>
+							<button class="button primary btn-edit" onclick="UpdateQuantity('<%=JSON.stringify(cartProduct)%>');" style="font-size:10px;">Update</button>
 						</div>
 						<div class="col-3">
 							<h1 style="font-weight:1000;font-size:25px; float:right;">$<%= cartProduct.prodInfo.price %></h1>
@@ -33,7 +33,7 @@
 
 					<div class="row" style="padding-top:50px">
 						<div class="col-12" >
-						<button class="button primary btn-delete" style="float:right;" onclick="RemoveFromCart('<%=JSON.stringify(cartProduct)%>');">Remove</button>
+						<button class="button primary btn-delete" style="float:right;font-size:12px;" onclick="RemoveFromCart('<%=JSON.stringify(cartProduct)%>');">Remove</button>
 						</div>
 					</div>
 				</div>
@@ -51,14 +51,14 @@
 <div class="row">
 	<div class="col-12">
 		<div style="float:right;">
-			<button class="button primary btn-edit" style="float:right;">Proceed To Checkout</button>
+			<button class="button primary btn-edit" style="float:right;font-size:15px">Proceed To Checkout</button>
 		</div>
 	</div>
 </div>
 </br>
 
 </div>
-</div>
+
 </form>
 </div>
 <%- include ('partials/footer') %>
