@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 	var collection = db.get('orders');
-
+    console.log(req.body);
     //create order
     var products = [];
     var totalPrice = 0.0;
@@ -24,7 +24,7 @@ router.post('/', function(req, res, next) {
     			status : 'New'
     		};
     		delProducts.push(ObjectId(req.body.productID[i]));
-    		totalPrice = totalPrice + parseFloat(req.body.price[i]); 
+    		totalPrice = totalPrice + parseFloat(req.body.price[i]) * parseInt(req.body.quantity[i]); 
         	products.push(product);
     	}
     }
