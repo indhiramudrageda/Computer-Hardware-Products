@@ -26,6 +26,7 @@ router.post('/', function(req, res, next) {
     		delProducts.push(ObjectId(req.body.productID[i]));
     		totalPrice = totalPrice + parseFloat(req.body.price[i]) * parseInt(req.body.quantity[i]); 
         	products.push(product);
+            console.log(products);
     	}
     }
     
