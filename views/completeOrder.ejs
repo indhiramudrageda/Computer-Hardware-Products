@@ -1,7 +1,12 @@
  <%- include ('partials/header') %>
 <div class="container">
-	<div class="row">
-		You order has been placed!
+	<div class="row mt-4" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+		<h1 class="strong">Your order has been successfully placed!</h1>
+		<p>Please use #<%= orderID%> for future reference.</p>
 	</div>
+	<div class="row mt-4" style="display: flex; flex-direction: column; justify-content: right; align-items: right;">
+		<a href="/"><button class="button primary" style="float:right; font-size: 15px;">Continue Shopping</button></a>
+	</div>
+	</br></br>
 </div>
 <%- include ('partials/footer') %>
