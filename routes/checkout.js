@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-    res.render('checkout', {products : req.body.productID, quantities: req.body.quantity, prices: req.body.price});
+	res.render('checkout', {products : req.body.productID, quantities: req.body.quantity, prices: req.body.price});
 });
 
 module.exports = router;
