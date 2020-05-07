@@ -39,56 +39,121 @@ productsCollection.find({}, function (err, res) {
 //search
 router.post("/", function (req, res, next) {
   var value = req.body.search;
+  var showInactive = false;
+  if(req.user && req.user.role == 'admin')
+      showInactive = true;
+
   console.log("category: " + req.body.category);
   if (!!value && !category) {
-    productsCollection.find(
-      {
-        $or: [
-          { name: { $regex: value, $options: "i" } },
-          { Description: { $regex: value, $options: "i" } },
-        ],
-      },
-      function (err, prod) {
-        if (err) throw err;
-        console.log(prod);
-        res.render("search", {
-          products: prod,
-          categories: categories,
-          searched: value,
-        });
-      }
-    );
-  } else if (!!value && !!category) {
-    productsCollection.find(
-      {
-        $and: [
+    if(showInactive) {
+          productsCollection.find(
           {
             $or: [
               { name: { $regex: value, $options: "i" } },
-              {
-                Description: {
-                  $regex: value,
-                  $options: "i",
-                },
-              },
+              { Description: { $regex: value, $options: "i" } },
             ],
           },
+          function (err, prod) {
+            if (err) throw err;
+            console.log(prod);
+            res.render("search", {
+              products: prod,
+              categories: categories,
+              searched: value,
+            });
+          }
+        );
+    } else {
+          productsCollection.find(
           {
-            category: { $regex: category, $options: "i" },
+            $and: [
+            {
+              $or: [
+                { name: { $regex: value, $options: "i" } },
+                { Description: { $regex: value, $options: "i" } },
+              ]
+            },
+            {status:'Active'}
+            ]
           },
-        ],
-      },
-      function (err, prod) {
-        if (err) throw err;
-        console.log(prod);
-        res.render("search", {
-          products: prod,
-          categories: categories,
-          searched: value,
-          category: category,
-        });
-      }
-    );
+          function (err, prod) {
+            if (err) throw err;
+            console.log(prod);
+            res.render("search", {
+              products: prod,
+              categories: categories,
+              searched: value,
+            });
+          }
+          );
+    }
+    
+  } else if (!!value && !!category) {
+    if(showInactive) {
+            productsCollection.find(
+            {
+              $and: [
+                {
+                  $or: [
+                    { name: { $regex: value, $options: "i" } },
+                    {
+                      Description: {
+                        $regex: value,
+                        $options: "i",
+                      },
+                    },
+                  ],
+                },
+                {
+                  category: { $regex: category, $options: "i" },
+                },
+              ],
+            },
+            function (err, prod) {
+              if (err) throw err;
+              console.log(prod);
+              res.render("search", {
+                products: prod,
+                categories: categories,
+                searched: value,
+                category: category,
+              });
+            }
+          );
+    } else {
+          productsCollection.find(
+            {
+              $and: [
+                {
+                  $or: [
+                    { name: { $regex: value, $options: "i" } },
+                    {
+                      Description: {
+                        $regex: value,
+                        $options: "i",
+                      },
+                    },
+                  ],
+                },
+                {
+                  category: { $regex: category, $options: "i" },
+                },
+                { status: 'Active'}
+              ],
+            },
+            function (err, prod) {
+              if (err) throw err;
+              console.log(prod);
+              res.render("search", {
+                products: prod,
+                categories: categories,
+                searched: value,
+                category: category,
+              });
+            }
+          );
+    }
+    
   } else {
     res.render("index", {
       categories: categories,
