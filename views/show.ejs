@@ -6,7 +6,8 @@
         <div class="card mb-4" >
             <img class="card-img-top" src="/images/products/<%= product.image %>" alt="Card image cap">
             <div class="card-body">
-                <h3 class="card-title" style="color:black;">$<%= product.price %></h3>
+                <h3 class="card-title" style="color:black;"><%= product.name %></h3>
+                <h4 class="card-title" style="color:black;">$<%= product.price %></h4>
                 <h5 class="card-title" style="color:black;"><%= product.status %></h5>
                 <h5 class="card-title" style="color:black;">In stock: <%= product.stock %></h5>
                 <h5 class="card-title" style="color:black;"><%= product.category %></h5>
