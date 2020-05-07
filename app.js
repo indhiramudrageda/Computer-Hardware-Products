@@ -11,6 +11,7 @@ var methodOveride = require('method-override');
 
 var indexRouter = require('./routes/index');
 var searchRouter = require('./routes/search');
+var showRouter = require('./routes/show');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
 var signupRouter = require('./routes/signup');
@@ -58,6 +59,7 @@ app.use(function(req, res, next) {
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/search', searchRouter);
+app.use('/show', showRouter);
 app.use('/signup', signupRouter);
 app.use('/logout', logoutRouter);
 app.use('/manageProducts', manageProductsRouter);
