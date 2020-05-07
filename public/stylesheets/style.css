@@ -2,16 +2,8 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-.navbar {
-  padding: 0em 0em;
-}
-
 .navbar-brand {
 	color: white!important;
-}
-
-#registerBtn:hover, #logo:hover {
-  text-decoration: none;
 }
 
 #login, #signup {
@@ -24,7 +16,6 @@ body {
 
 #login button, #signup button, #myCreateModal button, #myEditModal button,  #myUploadModal button{
 	float: right;
-  font-size:12px;
 }
 
 .error-message {
@@ -167,10 +158,6 @@ body {
   color: #bbb;
   text-decoration: none;
   cursor: pointer;
-}
-
-#addNewProduct {
-  float: right;
 }
 
 .product {
