@@ -34,17 +34,28 @@ categoriesCollection.find({}, function (err, res) {
   if (err) throw err;
   categories = res;
 });
-productsCollection.find({}, function (err, res) {
-  if (err) throw err;
-  products = res;
-});
 
-router.get("/", function (req, res, next) {
-  console.log(req.session.email);
-  productsCollection.find({}, function (err, res) {
-    if (err) throw err;
-    products = res;
+async function fetchProducts(category) {
+  return new Promise(function (resolve, reject) {
+    if (!category) {
+      productsCollection.find({}, function (err, res) {
+        if (err) reject();
+        resolve(res);
+      });
+    }
+
+    productsCollection.find({ category: category }, function (err, res) {
+      if (err) reject();
+      resolve(res);
+    });
   });
+}
+
+router.get("/", async function (req, res, next) {
+  console.log(req.session.email);
+  var passedCategory = req.query.category;
+  var products = await fetchProducts(passedCategory);
+  console.log(products);
   if (req.session.email) {
     console.log(req.session.email);
     res.render("index", {
@@ -52,6 +63,7 @@ router.get("/", function (req, res, next) {
       firstName: req.session.firstName,
     });
   } else {
+    console.log(products);
     res.render("index", {
       categories: categories,
       products: products,
@@ -61,14 +73,8 @@ router.get("/", function (req, res, next) {
 
 router.post("/", function (req, res, next) {
   var { category } = req.body;
-  productsCollection.find({ category: category }, function (err, res) {
-    if (err) throw err;
-    products = res;
-  });
-  res.render("index", {
-    categories: categories,
-    products: products,
-  });
+  category = encodeURIComponent(category);
+  res.redirect("/?category=" + category);
 });
 
 
