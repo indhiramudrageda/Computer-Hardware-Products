@@ -11,6 +11,11 @@
                 <h3>Showing results for: 
                     <%= searched %> <%= category ? `in category: ${category}` : '' %>
                 </h3> 
+                <%if((typeof user != "undefined") && user.role == 'admin'){%>
+                    <button class="button primary" id="addNewProduct" onclick="showCreateDialog();" style="font-size:12px;">Add New</button>
+                    </br></br>
+                    <%- include ('manageProducts') %>
+                <%}%>
                 <div class="row">
                     <div class="card-deck">
                         <% products.forEach(function(product){ %>
