@@ -1,6 +1,17 @@
 <%- include ('partials/header') %>
 <div class="container">
-<form method="post" action="/completeOrder"> 
+<form method="POST" action="/completeOrder">
+	<% products.forEach(function(product){ %>
+		<input type="hidden" value="<%= product %>" name="productID"/>
+	<% }); %> 
+	<% quantities.forEach(function(quantity){ %>
+			<input type="hidden" value="<%= quantity %>" name="quantity"/>
+	<% }); %>
+	<% prices.forEach(function(price){ %>
+			<input type="hidden" value="<%= price %>" name="price"/>
+	<% }); %>
+
+
 	<div id="signup" class="row">
 		<div class="col-2 col-12-medium imp-medium">
 		</div>

@@ -21,6 +21,11 @@
 								</div>
 							</div>
 						</div>
+
+						<input type="hidden" value="<%= cartProduct.productID %>" name="productID"/>
+						<input type="hidden" value="<%= cartProduct.quantity %>" name="quantity"/>
+						<input type="hidden" value="<%= cartProduct.prodInfo.price %>" name="price"/>
+
 						<div class="col-3">
 							<label for="EditQuantity" style="display:inline;">Qty:</label>
 							<input type="text" style="width:100px;display:inline" id="EditQuantity<%= cartProduct.prodInfo._id %>" value="<%= cartProduct.quantity %>"/>
@@ -51,14 +56,13 @@
 <div class="row">
 	<div class="col-12">
 		<div style="float:right;">
-			<button class="button primary btn-edit" style="float:right;font-size:15px">Proceed To Checkout</button>
+			<button class="button primary btn-edit" style="float:right;font-size:15px" type="submit">Proceed To Checkout</button>
 		</div>
 	</div>
 </div>
 </br>
 
 </div>
-
 </form>
 </div>
 <%- include ('partials/footer') %>
