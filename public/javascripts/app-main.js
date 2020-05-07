@@ -83,15 +83,16 @@ function showCreateDialog() {
 function createProduct(event) {
 	event.preventDefault();
 	var form = $('#create-product-form')[0];
-	if(!$('#Stock').val().match(/([0-9])/)) {
+  
+	if(!$('#Stock').val().match(/([0-9])/) || $('#Stock').val().match(/^(\-(\d*))$/)) {
 		$('.error-message').text('Invalid Stock value!');
 		return;
 	}
 
-	/*if(!$('#Price').val().match(/^[0-9]+\.[0-9]+$/)) {
+	if($('#Price').val().match(/^(\-(\d*))$/)) {
     $('.error-message').text('Invalid Price value!');
     return;
-  }*/
+  }
 
 	var data = new FormData(form);
   $("#btnSubmit").prop("disabled", true);
@@ -151,15 +152,15 @@ function showEditDialog(product) {
 function updateProduct() {
   event.preventDefault();
   var form = $('#update-product-form')[0];
-	if(!$('#EditStock').val().match(/([0-9])/)) {
+	if(!$('#EditStock').val().match(/([0-9])/) || $('#EditStock').val().match(/^(\-(\d*))$/)) {
 		$('.error-message').text('Invalid Stock value!');
 		return;
 	}
 
-  /*if(!$('#EditPrice').val().match(/^[0-9]+\.[0-9]+$/)) {
+  if($('#EditPrice').val().match(/^(\-(\d*))$/)) {
     $('.error-message').text('Invalid Price value!');
     return;
-  }*/
+  }
 
   var data = new FormData(form);
   $("#UBtnSubmit").prop("disabled", true);
@@ -250,7 +251,7 @@ function updateImage(event) {
 function UpdateQuantity(product) {
   event.preventDefault();
   var p = JSON.parse(product);
-  if(!$('#EditQuantity'+p.prodInfo._id).val().match(/([0-9])/)) {
+  if(!$('#EditQuantity'+p.prodInfo._id).val().match(/([0-9])/) || $('#EditQuantity'+p.prodInfo._id).val().match(/^(\-(\d*))$/)) {
     $('.error-message').text('Invalid quantity value!');
     return;
   }
