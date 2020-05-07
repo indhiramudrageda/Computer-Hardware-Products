@@ -25,10 +25,8 @@ var orders;
 
 function renderOrderHistory(req, res, error) {
   var userID = req.session.user._id;
-  ordersCollection.find({ userID: ObjectId(userID.toString()) }, function (
-    err,
-    result
-  ) {
+  console.log(userID);
+  ordersCollection.find({ userID: userID.toString() }, function (err, result) {
     if (err) throw err;
     orders = result;
     console.log(orders);
@@ -41,7 +39,7 @@ function renderOrderHistory(req, res, error) {
 
 router.get("/", function (req, res, next) {
   console.log(req.session.user);
-  if (!req.session.user || (!req, session.user._id)) {
+  if (!req.session.user) {
     res.redirect("/login");
   }
   renderOrderHistory(req, res, "");
