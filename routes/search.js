@@ -69,6 +69,7 @@ router.post("/", function (req, res, next) {
           function (err, prod) {
             if (err) throw err;
             console.log(prod);
+            console.log('length '+prod.length)
             
             res.render("search", {
               products: prod,
@@ -95,6 +96,7 @@ router.post("/", function (req, res, next) {
           function (err, prod) {
             if (err) throw err;
             console.log(prod);
+            console.log('length '+prod.length)
 
             res.render("search", {
               products: prod,
@@ -131,6 +133,7 @@ router.post("/", function (req, res, next) {
             function (err, prod) {
               if (err) throw err;
               console.log(prod);
+              console.log('length '+prod.length)
     
               res.render("search", {
                 products: prod,
@@ -166,6 +169,7 @@ router.post("/", function (req, res, next) {
             function (err, prod) {
               if (err) throw err;
               console.log(prod);
+              console.log('length '+prod.length)
      
               res.render("search", {
                 products: prod,
