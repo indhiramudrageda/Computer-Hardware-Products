@@ -65,7 +65,7 @@
                 <form action="/search" method="POST">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                     <%for(i=1; i<=l+1; i++){%>
+                     <%for(i=1; i<l+1; i++){%>
                       <li class="page-item"><button name="buttonP" value="<%= i %>" type="submit" class="btn btn-success"><%= i %></button></li>
                       <%}%>
                       <input type="hidden" name="sf" value="<%= val %>">

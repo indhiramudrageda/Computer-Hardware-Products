@@ -59,6 +59,20 @@ router.post("/", function (req, res, next) {
   console.log("category: " + req.body.category);
   if (!!global.searchItem && !category) {
     if(showInactive) {
+          var tLen 
+          productsCollection.find(
+            {
+              $or: [
+                { name: { $regex: global.searchItem, $options: "i" } },
+                { Description: { $regex: global.searchItem, $options: "i" } },
+              ],
+            },
+            function (err, prod) {
+              if (err) throw err;
+              tLen = prod.length;
+            }
+          );
+
           productsCollection.find(
           {
             $or: [
@@ -69,18 +83,37 @@ router.post("/", function (req, res, next) {
           function (err, prod) {
             if (err) throw err;
             console.log(prod);
-            console.log('length '+prod.length)
+            console.log('length '+tLen)
             
             res.render("search", {
               products: prod,
               categories: categories,
               searched: global.searchItem,
-              l: prod.length,
+              l: tLen,
               val: value
             });
           }
         );
     } else {
+          var tLen 
+          productsCollection.find(
+            {
+              $and: [
+              {
+                $or: [
+                  { name: { $regex: global.searchItem, $options: "i" } },
+                  { Description: { $regex: global.searchItem, $options: "i" } },
+                ]
+              },
+              {status:'Active'}
+              ]
+            },
+            function (err, prod) {
+              if (err) throw err;
+              tLen = prod.length;
+            }
+          );
+
           productsCollection.find(
           {
             $and: [
@@ -96,13 +129,13 @@ router.post("/", function (req, res, next) {
           function (err, prod) {
             if (err) throw err;
             console.log(prod);
-            console.log('length '+prod.length)
+            console.log('length '+tLen)
 
             res.render("search", {
               products: prod,
               categories: categories,
               searched: global.searchItem,
-              l: prod.length,
+              l: tLen,
               val: value
             });
           }
@@ -111,6 +144,32 @@ router.post("/", function (req, res, next) {
     
   } else if (!!global.searchItem && !!category) {
     if(showInactive) {
+            var tLen 
+            productsCollection.find(
+              {
+                $and: [
+                  {
+                    $or: [
+                      { name: { $regex: global.searchItem, $options: "i" } },
+                      {
+                        Description: {
+                          $regex: global.searchItem,
+                          $options: "i",
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    category: { $regex: category, $options: "i" },
+                  },
+                ],
+              },
+              function (err, prod) {
+                if (err) throw err;
+                tLen = prod.length;
+              }
+            );
+
             productsCollection.find(
             {
               $and: [
@@ -133,19 +192,45 @@ router.post("/", function (req, res, next) {
             function (err, prod) {
               if (err) throw err;
               console.log(prod);
-              console.log('length '+prod.length)
+              console.log('length '+tLen)
     
               res.render("search", {
                 products: prod,
                 categories: categories,
                 searched: global.searchItem,
                 category: category,
-                l: prod.length,
+                l: tLen,
                 val: value
               });
             }
           );
     } else {
+          var tLen 
+          productsCollection.find(
+            {
+              $and: [
+                {
+                  $or: [
+                    { name: { $regex: global.searchItem, $options: "i" } },
+                    {
+                      Description: {
+                        $regex: global.searchItem,
+                        $options: "i",
+                      },
+                    },
+                  ],
+                },
+                {
+                  category: { $regex: category, $options: "i" },
+                },
+                { status: 'Active'}
+              ],
+            },
+            function (err, prod) {
+              if (err) throw err;
+              tLen = prod.length;
+            }
+          );
           productsCollection.find(
             {
               $and: [
@@ -169,14 +254,14 @@ router.post("/", function (req, res, next) {
             function (err, prod) {
               if (err) throw err;
               console.log(prod);
-              console.log('length '+prod.length)
+              console.log('length '+tLen)
      
               res.render("search", {
                 products: prod,
                 categories: categories,
                 searched: global.searchItem,
                 category: category,
-                l: prod.length,
+                l: tLen,
                 val: value
               });
             }
