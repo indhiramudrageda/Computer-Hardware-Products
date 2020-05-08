@@ -9,6 +9,17 @@ router.get('/', function(req, res, next) {
     res.render('signup');
 });
 
+router.get('/:id', function(req, res, next) {
+    var collection = db.get('users');
+    collection.findOne({ email: req.params.id }, function(err, user){
+        if (user) {
+            res.send({success:'User found!'});
+        } else {
+            res.send({error:'User not found!'});
+        }
+    });
+});
+
 router.post('/', function(req,res) {
 	var collection = db.get('users');
 
@@ -34,12 +45,7 @@ router.post('/', function(req,res) {
                     if (err) {
                         res.render('signup', { error: 'Error creating user account!' });
                     } else {
-                        db.get('carts').insert({
-                            userID: user._id.toString(),
-                            products: [],
-                            createDate: new Date(Date.now()).toISOString(),
-                            lastModifiedDate: new Date(Date.now()).toISOString()
-                        });
+                        
                     }  
                 });
                 res.redirect('/login'); 
