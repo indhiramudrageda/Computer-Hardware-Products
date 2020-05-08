@@ -56,7 +56,7 @@ router.put('/:id', function(req, res) {
                                 status: req.body.EditStatus,
                                 stock: parseInt(req.body.EditStock),
                                 price: parseFloat(req.body.EditPrice),
-                                lastModifiedDate: new Date(Date.now()).toISOString(),
+                                lastModifiedDate: new Date(Date.now()),
                                 lastModifiedBy:req.session.user.email } };
     } else {
         newvalues = { $set: {   name: req.body.EditPName, 
@@ -65,7 +65,7 @@ router.put('/:id', function(req, res) {
                                 status: req.body.EditStatus,
                                 stock: parseInt(req.body.EditStock),
                                 price: parseFloat(req.body.EditPrice),
-                                lastModifiedDate: new Date(Date.now()).toISOString(),
+                                lastModifiedDate: new Date(Date.now()),
                                 lastModifiedBy:req.session.user.email } };
     }
     
@@ -93,9 +93,9 @@ router.post('/', function(req,res) {
                     stock: parseInt(req.body.Stock),
                     price: parseFloat(req.body.Price),
                     status: req.body.Status,
-                    createDate: new Date(Date.now()).toISOString(),
+                    createDate: new Date(Date.now()),
                     createdBy: req.session.user.email,
-                    lastModifiedDate: new Date(Date.now()).toISOString(),
+                    lastModifiedDate: new Date(Date.now()),
                     lastModifiedBy:req.session.user.email
                 }, function(err, product){
                     if (err) {
