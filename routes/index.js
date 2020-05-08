@@ -39,26 +39,37 @@ async function fetchProducts(category, showInactive) {
   return new Promise(function (resolve, reject) {
     if (!category) {
         if(showInactive) {
-            productsCollection.find({}, function (err, res) {
-              if (err) reject();
-              resolve(res);
+            productsCollection.aggregate([
+                {$sort : { createDate : -1}},
+                { $limit : 10 }
+            ], function (err, res) {
+                if (err) reject();
+                resolve(res);
             });
         } else {
-            productsCollection.find({status:'Active'}, function (err, res) {
-              if (err) reject();
-              resolve(res);
+            productsCollection.aggregate([
+                {$match: {status: 'Active'}},  
+                {$sort : { createDate : -1}},
+                { $limit : 10 }      
+            ], function (err, res) {
+                if (err) reject();
+                resolve(res);
             });
         }
         
     }
 
     if(showInactive) {
-            productsCollection.find({ category: category }, function (err, res) {
+            productsCollection.aggregate([
+                {$match: {category: category}}       
+            ], function (err, res) {
                 if (err) reject();
                 resolve(res);
             });
     } else {
-            productsCollection.find({ category: category, status:'Active' }, function (err, res) {
+            productsCollection.aggregate([
+                {$match: {status: 'Active', category: category}}
+            ], function (err, res) {
                 if (err) reject();
                 resolve(res);
             });
