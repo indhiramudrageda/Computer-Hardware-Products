@@ -19,6 +19,8 @@ app.use(
   })
 );
 
+global.searchItem
+
 var monk = require("monk");
 var db = monk("localhost:27017/newton");
 
@@ -39,68 +41,83 @@ productsCollection.find({}, function (err, res) {
 //search
 router.post("/", function (req, res, next) {
   var value = req.body.search;
+  var page =1;
+
+  if(req.body.buttonP!=undefined){
+    page=parseInt(req.body.buttonP);
+    value = req.body.sf
+  }
+
+  console.log('button number: '+page)
+  console.log('value: '+value)
+
+  global.searchItem = value;
   var showInactive = false;
   if(req.user && req.user.role == 'admin')
       showInactive = true;
 
   console.log("category: " + req.body.category);
-  if (!!value && !category) {
+  if (!!global.searchItem && !category) {
     if(showInactive) {
           productsCollection.find(
           {
             $or: [
-              { name: { $regex: value, $options: "i" } },
-              { Description: { $regex: value, $options: "i" } },
+              { name: { $regex: global.searchItem, $options: "i" } },
+              { Description: { $regex: global.searchItem, $options: "i" } },
             ],
-          },
+          }, { limit : 1, sort: {_id: -1}, skip:page-1},
           function (err, prod) {
             if (err) throw err;
             console.log(prod);
+            
             res.render("search", {
               products: prod,
               categories: categories,
-              searched: value,
+              searched: global.searchItem,
+              l: prod.length,
+              val: value
             });
           }
-        ).sort({ date: 1 })
-        .skip(0)
-        .limit(1);
+        );
     } else {
           productsCollection.find(
           {
             $and: [
             {
               $or: [
-                { name: { $regex: value, $options: "i" } },
-                { Description: { $regex: value, $options: "i" } },
+                { name: { $regex: global.searchItem, $options: "i" } },
+                { Description: { $regex: global.searchItem, $options: "i" } },
               ]
             },
             {status:'Active'}
             ]
-          },
+          },{ limit : 1, sort: {_id: -1}, skip:page-1},
           function (err, prod) {
             if (err) throw err;
             console.log(prod);
+
             res.render("search", {
               products: prod,
               categories: categories,
-              searched: value,
+              searched: global.searchItem,
+              l: prod.length,
+              val: value
             });
           }
           );
     }
     
-  } else if (!!value && !!category) {
+  } else if (!!global.searchItem && !!category) {
     if(showInactive) {
             productsCollection.find(
             {
               $and: [
                 {
                   $or: [
-                    { name: { $regex: value, $options: "i" } },
+                    { name: { $regex: global.searchItem, $options: "i" } },
                     {
                       Description: {
-                        $regex: value,
+                        $regex: global.searchItem,
                         $options: "i",
                       },
                     },
@@ -110,15 +127,18 @@ router.post("/", function (req, res, next) {
                   category: { $regex: category, $options: "i" },
                 },
               ],
-            },
+            }, { limit : 1, sort: {_id: -1}, skip:page-1},
             function (err, prod) {
               if (err) throw err;
               console.log(prod);
+    
               res.render("search", {
                 products: prod,
                 categories: categories,
-                searched: value,
+                searched: global.searchItem,
                 category: category,
+                l: prod.length,
+                val: value
               });
             }
           );
@@ -128,10 +148,10 @@ router.post("/", function (req, res, next) {
               $and: [
                 {
                   $or: [
-                    { name: { $regex: value, $options: "i" } },
+                    { name: { $regex: global.searchItem, $options: "i" } },
                     {
                       Description: {
-                        $regex: value,
+                        $regex: global.searchItem,
                         $options: "i",
                       },
                     },
@@ -142,15 +162,18 @@ router.post("/", function (req, res, next) {
                 },
                 { status: 'Active'}
               ],
-            },
+            }, { limit : 1, sort: {_id: -1}, skip:page-1},
             function (err, prod) {
               if (err) throw err;
               console.log(prod);
+     
               res.render("search", {
                 products: prod,
                 categories: categories,
-                searched: value,
+                searched: global.searchItem,
                 category: category,
+                l: prod.length,
+                val: value
               });
             }
           );
@@ -163,6 +186,9 @@ router.post("/", function (req, res, next) {
     });
   }
 });
+
+
+
 
 router.post("/", function (req, res, next) {
   var { category } = req.body;

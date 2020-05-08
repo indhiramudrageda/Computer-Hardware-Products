@@ -16,9 +16,11 @@
                     </br></br>
                     <%- include ('manageProducts') %>
                 <%}%>
+                
                 <div class="row">
                     <div class="card-deck">
-                        <% products.forEach(function(product){ %>
+                        <!-- <% products.forEach(function(product){ %> -->
+                            <div class="col-sm-9 col-md-12 col-lg-10">
                             <div class="card mb-4" style="min-width: 16rem; max-width: 18rem;">
                                 <div class="card-image">
                                     <img class="bd-placeholder-img card-img-top" src="images/products/<%= product.image %>" alt="Card image cap" onclick="location.href = 'http://localhost:3000/show/<%= product._id %>'">
@@ -54,10 +56,23 @@
                                     <%}%>
                                 </div>
                             </div>
-                        <% }); %>
+                            
+                        <!-- <% }); %> -->
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <form action="/search" method="POST">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                     <%for(i=1; i<=l+1; i++){%>
+                      <li class="page-item"><button name="buttonP" value="<%= i %>" type="submit" class="btn btn-success"><%= i %></button></li>
+                      <%}%>
+                      <input type="hidden" name="sf" value="<%= val %>">
+                    </ul>
+                  </nav>
+                </form>
+                </div>
 		</div>
 	</div>
 	
