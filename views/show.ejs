@@ -11,7 +11,7 @@
                 <h5 class="card-title" style="color:black;"><%= product.status %></h5>
                 <h5 class="card-title" style="color:black;">In stock: <%= product.stock %></h5>
                 <h5 class="card-title" style="color:black;"><%= product.category %></h5>
-                <p class="card-text" style="color:black;"><%= product.Description %></p>
+                <p class="card-text" style="color:black;"><%= product.description %></p>
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="display: flex;align-items: center; justify-content: center; width: 100%; height: 20%;">
                 <%if(typeof user != "undefined" && product.status != 'Inactive' && product.stock > 0){%>
                     <form action="/cart" method="POST">  
