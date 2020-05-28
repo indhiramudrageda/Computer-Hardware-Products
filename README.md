@@ -1,18 +1,3 @@
-node --version
-npm install -g express-generator
-express --version
-cd desktop
-express CHP
+The purpose of this project was to create a website using the languages and tools that we learned over the course of this semester. We were given a list of possible options within the scope of the e-commerce domain. Our team chose to create an e-commerce website for a Computer Parts store. The project got challenging as we delved into complex implementations and gave us the opportunity of learning new sets of techniques. We were provided with a set of requirements that we were supposed to adhere to.
 
-cd CHP
-npm install 
-npm install nodemon -g
-nodemon
-
-npm install monk --save 
-sudo npm install ejs --save
-npm install method-override --save 
-
-
-mongod                      // to start mongodb as a service
-mongod --dbpath ~/data/db   // if your dbpath is different from /data/db
+Technologies Used: Node.js, Express Framework, HTML, Bootstrap, CSS, MongoDB
